@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>VetrinaFlash</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;600;700&display=swap');
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html, body {
+    width:1200px;
+    height:1200px;
+    overflow:hidden;
+    background:#000;
+    font-family:"Barlow",sans-serif;
+  }
+
+  .page {
+    width:1200px;
+    height:1200px;
+    background:#060d04;
+    position:relative;
+    overflow:hidden;
+    display:grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    padding:40px 56px 40px;
+    gap:0;
+  }
+
+  /* ── BACKGROUND ── */
+  .bg {
+    position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 100% 50% at 0% 0%, rgba(10,55,0,0.95) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 60% at 100% 100%, rgba(5,30,0,0.7) 0%, transparent 55%);
+  }
+  .bg-grid {
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(80,220,0,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(80,220,0,0.035) 1px, transparent 1px);
+    background-size:66px 66px;
+  }
+  .slash {
+    position:absolute; top:-300px; right:330px;
+    width:3px; height:2000px;
+    background:linear-gradient(180deg, transparent, rgba(120,240,0,0.28), transparent);
+    transform:rotate(-17deg);
+  }
+  .wm {
+    position:absolute; right:-30px; top:38%;
+    transform:translateY(-50%);
+    font-family:"Bebas Neue",sans-serif;
+    font-size:580px; line-height:1;
+    color:transparent;
+    -webkit-text-stroke:2px rgba(255,40,40,0.045);
+    pointer-events:none; letter-spacing:-18px;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    position:relative; z-index:10;
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:28px;
+  }
+  /* mix-blend-mode:screen elimina lo sfondo nero del logo PNG */
+  .logo-img {
+    width:190px; height:auto;
+    mix-blend-mode: screen;
+    filter: drop-shadow(0 0 14px rgba(34,197,34,0.45));
+  }
+  .badge {
+    background:linear-gradient(135deg,#17a317,#9aff00);
+    color:#000; font-size:15px; font-weight:900;
+    padding:10px 22px; border-radius:100px;
+    letter-spacing:1px; text-transform:uppercase;
+    box-shadow:0 0 28px rgba(34,197,34,0.75);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position:relative; z-index:10;
+    display:flex; align-items:center;
+    gap:40px; margin-bottom:24px;
+  }
+  .hero-left { flex:1; }
+
+  .tag {
+    color:#9aff00; font-size:13px; font-weight:700;
+    letter-spacing:3.5px; text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+    margin-bottom:10px;
+  }
+  .tag::before { content:""; display:block; width:28px; height:2px; background:#9aff00; }
+
+  .headline {
+    font-family:"Bebas Neue",sans-serif;
+    font-size:108px; line-height:0.9;
+    color:#fff; margin-bottom:16px;
+  }
+  .hl-y { color:#FFD700; text-shadow:0 0 42px rgba(255,215,0,0.55); }
+  .hl-g { color:#9aff00; text-shadow:0 0 36px rgba(154,255,0,0.45); }
+
+  .subline {
+    font-size:19px; color:#aaa; line-height:1.6;
+  }
+  .subline strong { color:#fff; }
+
+  /* STAT BOX */
+  .stat-box {
+    background:rgba(255,25,25,0.07);
+    border:1px solid rgba(255,55,55,0.3);
+    border-radius:20px; padding:24px 30px;
+    display:flex; flex-direction:column; align-items:center;
+    min-width:220px; flex-shrink:0;
+    position:relative; overflow:hidden;
+  }
+  .stat-box::before {
+    content:""; position:absolute; top:0;left:0;right:0;
+    height:2px; background:linear-gradient(90deg,transparent,#FF3D3D,transparent);
+  }
+  .stat-ey { color:#FF7060; font-size:12px; font-weight:700; letter-spacing:2px; text-transform:uppercase; text-align:center; margin-bottom:2px; }
+  .stat-row { display:flex; align-items:flex-end; }
+  .stat-n {
+    font-family:"Bebas Neue",sans-serif; font-size:148px; line-height:0.88;
+    color:#FF3D3D; text-shadow:0 0 55px rgba(255,61,61,0.75); letter-spacing:-6px;
+  }
+  .stat-p {
+    font-family:"Bebas Neue",sans-serif; font-size:74px; color:#FF3D3D;
+    line-height:1; margin-bottom:6px; text-shadow:0 0 35px rgba(255,61,61,0.7);
+  }
+  .stat-sub { color:#666; font-size:12.5px; text-align:center; line-height:1.55; margin-top:8px; }
+  .stat-sub strong { color:#FF7060; display:block; font-size:13.5px; margin-bottom:2px; }
+  .chips { display:flex; gap:6px; margin-top:12px; }
+  .chip { border:1px solid rgba(255,255,255,0.1); color:#555; font-size:11px; font-weight:700; padding:3px 8px; border-radius:4px; text-transform:uppercase; text-decoration:line-through; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    position:relative; z-index:10; height:1px;
+    background:linear-gradient(90deg,rgba(154,255,0,0.45),rgba(154,255,0,0.1),transparent);
+    margin-bottom:22px;
+  }
+
+  /* ── FEATURES ── */
+  .pkg-hd {
+    position:relative; z-index:10;
+    color:#9aff00; font-size:12px; font-weight:700;
+    letter-spacing:3px; text-transform:uppercase;
+    display:flex; align-items:center; gap:12px;
+    margin-bottom:14px;
+  }
+  .pkg-hd::after { content:""; flex:1; height:1px; background:rgba(154,255,0,0.2); }
+
+  .feats {
+    position:relative; z-index:10;
+    display:flex; flex-direction:column; gap:10px;
+  }
+
+  .fc {
+    background:rgba(255,255,255,0.025);
+    border:1px solid rgba(154,255,0,0.12);
+    border-radius:12px; padding:13px 18px;
+    display:flex; align-items:center; gap:16px;
+    position:relative; overflow:hidden;
+  }
+  .fc::before {
+    content:""; position:absolute; top:0;left:0;
+    width:3px; height:100%;
+    background:linear-gradient(180deg,#22c522,#9aff00);
+  }
+  .fc.opt { border-color:rgba(255,215,0,0.22); }
+  .fc.opt::before { background:linear-gradient(180deg,#FFD700,#FFA500); }
+
+  .ico { font-size:24px; flex-shrink:0; }
+  .fc-text { flex:1; display:flex; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  .fc-t { color:#fff; font-size:17px; font-weight:700; }
+  .fc-d { color:#777; font-size:14px; }
+  .fc-d::before { content:"— "; color:#444; }
+
+  .opt-row { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+  .opt-b {
+    background:rgba(255,215,0,0.11); border:1px solid rgba(255,215,0,0.38);
+    color:#FFD700; font-size:10px; font-weight:900;
+    padding:2px 9px; border-radius:4px; letter-spacing:1.5px; text-transform:uppercase;
+  }
+  .opt-i { color:#9aff00; font-size:13px; font-style:italic; }
+
+  /* ── BOTTOM CTA ── */
+  .bottom {
+    position:relative; z-index:20;
+    display:flex; justify-content:space-between; align-items:center;
+    background:rgba(0,0,0,0.58);
+    border:1px solid rgba(154,255,0,0.22);
+    border-radius:16px; padding:22px 30px;
+    margin-top:auto;
+  }
+  .bottom::before {
+    content:""; position:absolute; top:0;left:0;right:0; height:2px;
+    background:linear-gradient(90deg,#22c522,#9aff00,transparent);
+    border-radius:16px 16px 0 0;
+  }
+
+  .pr-ey { color:#666; font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; }
+  .pr-main { font-family:"Bebas Neue",sans-serif; font-size:92px; line-height:0.88; color:#fff; }
+  .pr-main .eur { color:#9aff00; font-size:56px; vertical-align:super; }
+  .pr-note { color:#555; font-size:13px; margin-top:5px; }
+  .pr-gtee { color:#9aff00; font-size:14px; font-weight:700; margin-top:7px; }
+
+  .cta-r { display:flex; flex-direction:column; align-items:flex-end; gap:10px; }
+  .cta-btn {
+    background:linear-gradient(135deg,#18a818,#9aff00);
+    color:#000; font-family:"Barlow Condensed",sans-serif;
+    font-size:27px; font-weight:900;
+    padding:16px 46px; border-radius:10px;
+    letter-spacing:2px; text-transform:uppercase;
+    box-shadow:0 0 38px rgba(34,197,34,0.72), 0 0 72px rgba(34,197,34,0.25);
+  }
+  .cta-sub { color:#555; font-size:13px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="bg"></div>
+  <div class="bg-grid"></div>
+  <div class="slash"></div>
+  <div class="wm">30%</div>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <img class="logo-img" src="images/vetrinaflashlogo.png" alt="VetrinaFlash">
+    <div class="badge">⚡ Offerta Lancio &nbsp;·&nbsp; Solo €149 una tantum</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <div class="tag">Ristoratori, basta regalare soldi</div>
+      <div class="headline">
+        IL <span class="hl-y">30%</span> CHE DATE<br>
+        A <span class="hl-g">LORO</span> È <span class="hl-g">VOSTRO.</span>
+      </div>
+      <div class="subline">
+        Glovo e Just Eat vi costano <strong>più di un dipendente.</strong><br>
+        Il vostro sito proprietario = <strong>zero commissioni per sempre.</strong>
+      </div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-ey">Vi stanno prendendo</div>
+      <div class="stat-row">
+        <div class="stat-n">30</div>
+        <div class="stat-p">%</div>
+      </div>
+      <div class="stat-sub">
+        <strong>DI OGNI ORDINE</strong>
+        Lavorate gratis fino alle 23:00<br>per pagare le loro commissioni.
+      </div>
+      <div class="chips">
+        <div class="chip">Glovo</div>
+        <div class="chip">Just Eat</div>
+        <div class="chip">Deliveroo</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIVIDER -->
+  <div class="divider"></div>
+
+  <!-- FEATURES -->
+  <div class="pkg-hd">✦ Tutto incluso nel pacchetto</div>
+  <div class="feats">
+
+    <div class="fc">
+      <div class="ico">🌐</div>
+      <div class="fc-text">
+        <span class="fc-t">Sito Web + Menù Digitale proprietario</span>
+        <span class="fc-d">Nessuna app, funziona su qualsiasi dispositivo</span>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="ico">🎨</div>
+      <div class="fc-text">
+        <span class="fc-t">Grafica Professionale in PDF</span>
+        <span class="fc-d">Menù fisico, volantini e materiale promo pronti da stampare</span>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="ico">📱</div>
+      <div class="fc-text">
+        <span class="fc-t">Ordini WhatsApp Strutturati</span>
+        <span class="fc-d">Ogni ordine arriva pulito e diretto in cucina, zero caos</span>
+      </div>
+    </div>
+
+    <div class="fc">
+      <div class="ico">💸</div>
+      <div class="fc-text">
+        <span class="fc-t">Zero Commissioni — Per Sempre</span>
+        <span class="fc-d">Ogni euro è vostro, nessun costo nascosto, mai più</span>
+      </div>
+    </div>
+
+    <div class="fc opt">
+      <div class="ico">💳</div>
+      <div class="fc-text">
+        <div class="opt-row">
+          <span class="fc-t">Cassa Digitale — SumUp / Stripe / Apple Pay</span>
+          <span class="opt-b">⭐ Opzionale</span>
+          <span class="opt-i">già incluso nel prezzo · attivi quando vuoi · zero costi extra</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM -->
+  <div class="bottom">
+    <div>
+      <div class="pr-ey">Una tantum · Tutto incluso</div>
+      <div class="pr-main"><span class="eur">€</span>149</div>
+      <div class="pr-note">Nessun abbonamento · Nessun costo mensile · Nessuna sorpresa</div>
+      <div class="pr-gtee">🛡 Paghi solo se sei soddisfatto del risultato</div>
+    </div>
+    <div class="cta-r">
+      <div class="cta-btn">✉ SCRIVIMI IN DM →</div>
+      <div class="cta-sub">Demo gratuita e personalizzata · vetrinaflash.it</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

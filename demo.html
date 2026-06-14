@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Menu Premium | VetrinaFlash</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-body: #0a0a0c;
+            --bg-card: #141417;
+            --bg-glass: rgba(20, 20, 23, 0.85);
+            --text-main: #ffffff;
+            --text-muted: #9ba1a6;
+            --accent: #4CD964; 
+            --accent-hover: #3cb850;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.6);
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 110px; /* Spazio vitale per il carrello mobile */
+            overflow-x: hidden;
+        }
+
+        /* --- HERO BANNER MOBILE FIRST --- */
+        .hero {
+            position: relative;
+            height: 220px;
+            background-image: url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, var(--bg-body) 0%, rgba(10,10,12,0.2) 100%);
+        }
+
+        .hero-content {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px;
+            display: flex; align-items: flex-end; gap: 15px; z-index: 2;
+        }
+
+        .hero-logo {
+            width: 80px; height: 80px; border-radius: 12px; border: 2px solid var(--bg-body);
+            box-shadow: var(--shadow-sm); object-fit: cover; transform: translateY(25px); background: #fff;
+            flex-shrink: 0;
+        }
+
+        .hero-text { flex: 1; }
+        .hero-text h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; margin-bottom: 5px; line-height: 1.1; }
+        .hero-text p { color: var(--text-muted); font-size: 0.85rem; display: flex; align-items: center; gap: 6px; }
+
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 4px; background: rgba(76, 217, 100, 0.15);
+            color: var(--accent); padding: 3px 8px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; border: 1px solid rgba(76, 217, 100, 0.3);
+        }
+
+        /* --- MAIN LAYOUT MOBILE FIRST --- */
+        .main-container { width: 100%; padding: 0 15px; margin-top: 40px; }
+
+        /* --- STICKY CATEGORIES --- */
+        .categories-wrapper {
+            position: sticky; top: 0; background: var(--bg-glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            z-index: 100; padding: 15px 0; margin-bottom: 20px; border-bottom: 1px solid var(--border-color);
+            margin-left: -15px; margin-right: -15px; padding-left: 15px; padding-right: 15px;
+        }
+
+        .categories { 
+            display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; 
+            -webkit-overflow-scrolling: touch; /* Scroll fluido su iOS */
+            padding-bottom: 5px;
+        }
+        .categories::-webkit-scrollbar { display: none; }
+
+        .cat-btn {
+            background: var(--bg-body); color: var(--text-muted); border: 1px solid var(--border-color);
+            padding: 8px 20px; border-radius: 30px; font-size: 0.9rem; font-weight: 600; cursor: pointer; white-space: nowrap; transition: 0.3s;
+        }
+        .cat-btn.active { background: var(--text-main); color: var(--bg-body); border-color: var(--text-main); }
+
+        /* --- GRID & CARDS MOBILE FIRST --- */
+        .grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+
+        .card {
+            background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md);
+            overflow: hidden; display: flex; flex-direction: row; min-height: 130px; transition: 0.3s; box-shadow: var(--shadow-sm);
+        }
+
+        .card-img-wrapper { width: 120px; flex-shrink: 0; position: relative; }
+        .card-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+
+        .card-content { padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.05rem; margin-bottom: 4px; line-height: 1.2; }
+        .card-desc { color: var(--text-muted); font-size: 0.8rem; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        .card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+        .price { font-weight: 700; font-size: 1.05rem; color: var(--accent); }
+        .btn-add {
+            background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid var(--border-color);
+            width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s;
+        }
+        .btn-add:hover { background: var(--accent); color: #000; border-color: var(--accent); transform: scale(1.1); }
+
+        /* --- SIDEBAR CART (NASCOSTA SU MOBILE) --- */
+        .cart-sidebar { display: none; }
+
+        /* --- BOTTOM CART MOBILE --- */
+        .cart-mobile {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: calc(100% - 30px); max-width: 400px;
+            background: rgba(30, 30, 35, 0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255,255,255,0.15); padding: 12px 20px; border-radius: 100px; 
+            display: none; justify-content: space-between; align-items: center; z-index: 1000; box-shadow: var(--shadow-lg);
+        }
+
+        .cart-mobile-info { display: flex; flex-direction: column; line-height: 1.2; }
+        .cart-mobile-label { font-size: 0.75rem; color: var(--text-muted); }
+        .cart-mobile-total { font-weight: 700; font-size: 1.1rem; color: var(--accent); }
+
+        .cart-mobile-btn {
+            background: var(--accent); color: #000; padding: 10px 20px; border-radius: 30px;
+            font-weight: 700; font-size: 0.95rem; text-decoration: none; display: flex; align-items: center; gap: 8px;
+        }
+
+        /* --- MEDIA QUERY DESKTOP (PC / TABLET GRANDI) --- */
+        @media (min-width: 992px) {
+            body { padding-bottom: 0; }
+            
+            .hero { height: 350px; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; margin: 0 20px; }
+            .hero-content { padding: 30px; max-width: 1200px; margin: 0 auto; gap: 30px; }
+            .hero-logo { width: 140px; height: 140px; transform: translateY(50px); border-radius: 20px; }
+            .hero-text h1 { font-size: 3rem; }
+            .hero-text p { font-size: 1rem; }
+
+            .main-container { max-width: 1200px; margin: 60px auto 40px; padding: 0 20px; display: flex; gap: 40px; }
+            .menu-section { flex: 1; }
+
+            .categories-wrapper { margin: 0; padding: 20px 0; background: var(--bg-body); border: none; top: -1px; }
+            
+            /* Griglia Desktop: Card Verticali */
+            .grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 25px; }
+            .card { flex-direction: column; min-height: 320px; }
+            .card-img-wrapper { width: 100%; height: 200px; }
+            .card-img { position: relative; }
+            .card-content { padding: 20px; }
+            .card-title { font-size: 1.2rem; margin-bottom: 8px; }
+            .btn-add { width: 40px; height: 40px; font-size: 1.1rem; }
+
+            /* Mostra Sidebar, Nascondi Mobile Cart */
+            .cart-mobile { display: none !important; }
+            .cart-sidebar {
+                display: block; width: 360px; background: var(--bg-card); border: 1px solid var(--border-color);
+                border-radius: var(--radius-lg); padding: 25px; position: sticky; top: 100px; height: fit-content;
+                box-shadow: var(--shadow-lg);
+            }
+
+            .cart-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.4rem; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+            .cart-items-list { max-height: 400px; overflow-y: auto; margin-bottom: 15px; padding-right: 10px; }
+            .cart-items-list::-webkit-scrollbar { width: 6px; }
+            .cart-items-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+            
+            .cart-item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dashed rgba(255,255,255,0.05); }
+            .cart-item-info { flex: 1; padding-right: 15px; }
+            .cart-item-title { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+            .cart-item-price { font-size: 0.9rem; color: var(--text-muted); }
+            
+            .cart-qty-controls { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 10px; border: 1px solid var(--border-color); }
+            .qty-btn { background: none; border: none; color: var(--text-main); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; width: 20px; transition: 0.2s; }
+            .qty-btn:hover { color: var(--accent); }
+            .qty-val { font-weight: bold; font-size: 1rem; min-width: 15px; text-align: center; color: var(--accent); }
+
+            .cart-empty-text { color: var(--text-muted); font-size: 0.95rem; text-align: center; margin: 40px 0; }
+            .cart-total-row { display: flex; justify-content: space-between; font-size: 1.3rem; font-weight: 700; margin-top: 15px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+
+            .btn-whatsapp {
+                background: var(--accent); color: #000; width: 100%; padding: 18px; border-radius: 14px;
+                border: none; font-size: 1.1rem; font-weight: 700; margin-top: 25px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; text-decoration: none; pointer-events: none; opacity: 0.4;
+            }
+            .btn-whatsapp.active { pointer-events: auto; opacity: 1; }
+            .btn-whatsapp.active:hover { background: var(--accent-hover); box-shadow: 0 0 25px rgba(76, 217, 100, 0.4); transform: translateY(-2px); }
+        }
+
+        /* Animazione Carrello */
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+        .pop-anim { animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=300&q=80" alt="Logo" class="hero-logo">
+            <div class="hero-text">
+                <h1>L'Artigiano del Gusto</h1>
+                <p>
+                    <span class="status-badge"><i class="fas fa-circle" style="font-size: 8px;"></i> APERTO ORA</span>
+                    <i class="fas fa-map-marker-alt" style="margin-left: 8px;"></i> Via Roma 123, Napoli
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        
+        <div class="menu-section">
+            <div class="categories-wrapper">
+                <div class="categories">
+                    <button class="cat-btn active" onclick="filterMenu('all')">Il Nostro Menu</button>
+                    <button class="cat-btn" onclick="filterMenu('pizze')">Le Pizze</button>
+                    <button class="cat-btn" onclick="filterMenu('burger')">Burger Premium</button>
+                    <button class="cat-btn" onclick="filterMenu('fritti')">Sfizi & Fritti</button>
+                </div>
+            </div>
+
+            <div class="grid" id="menu-grid">
+                
+                <div class="card" data-category="pizze">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=500&q=80" alt="Margherita" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <h3 class="card-title">Margherita Autentica</h3>
+                            <p class="card-desc">Pomodoro San Marzano DOP, fior di latte, basilico fresco, olio EVO a crudo.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">€ 7.50</span>
+                            <button class="btn-add" onclick="addToCart('Margherita Autentica', 7.50)"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" data-category="pizze">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=500&q=80" alt="Diavola" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <h3 class="card-title">Inferno 2.0 (Piccante)</h3>
+                            <p class="card-desc">Base rossa, fior di latte, spianata calabra piccante, n'duja artigianale.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">€ 9.00</span>
+                            <button class="btn-add" onclick="addToCart('Inferno 2.0', 9.00)"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" data-category="pizze">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80" alt="Pistacchio" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <h3 class="card-title">La Pistacchiosa</h3>
+                            <p class="card-desc">Fior di latte, mortadella Bologna IGP, pesto di pistacchio di Bronte, granella.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">€ 11.50</span>
+                            <button class="btn-add" onclick="addToCart('La Pistacchiosa', 11.50)"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" data-category="burger">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" alt="Burger" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <h3 class="card-title">Double Smash Bacon</h3>
+                            <p class="card-desc">Due patty di scottona 100g, doppio cheddar fuso, crispy bacon, salsa segreta.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">€ 13.00</span>
+                            <button class="btn-add" onclick="addToCart('Double Smash Bacon', 13.00)"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" data-category="fritti">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&w=500&q=80" alt="Patatine" class="card-img">
+                    </div>
+                    <div class="card-content">
+                        <div>
+                            <h3 class="card-title">Patate Dippers</h3>
+                            <p class="card-desc">Patate fresche a barchetta, fritte e salate. Croccanti fuori, morbide dentro.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">€ 4.50</span>
+                            <button class="btn-add" onclick="addToCart('Patate Dippers', 4.50)"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <aside class="cart-sidebar">
+            <h2 class="cart-title">Il tuo ordine</h2>
+            
+            <div id="cart-items-container" class="cart-items-list"></div>
+
+            <div id="cart-empty-msg" class="cart-empty-text">
+                <i class="fas fa-shopping-bag" style="font-size: 2.5rem; margin-bottom: 15px; opacity: 0.3;"></i><br>
+                Il tuo carrello è vuoto.
+            </div>
+            
+            <div class="cart-total-row">
+                <span>Totale</span>
+                <span id="pc-total">€ 0.00</span>
+            </div>
+
+            <a href="#" id="wa-btn-pc" class="btn-whatsapp" target="_blank">
+                <i class="fab fa-whatsapp" style="font-size: 1.4rem;"></i> Invia Ordine
+            </a>
+        </aside>
+
+    </div>
+
+    <div class="cart-mobile" id="mobile-cart-bar">
+        <div class="cart-mobile-info">
+            <span class="cart-mobile-label">Totale (<span id="mobile-count">0</span>)</span>
+            <span class="cart-mobile-total" id="mobile-total">€ 0.00</span>
+        </div>
+        <a href="#" id="wa-btn-mob" class="cart-mobile-btn" target="_blank">
+            Ordina <i class="fab fa-whatsapp" style="font-size: 1.1rem;"></i>
+        </a>
+    </div>
+
+    <script>
+        let cart = {}; 
+        const PHONE_NUMBER = "393342633"; // IL TUO NUMERO
+
+        function addToCart(name, price) {
+            if (cart[name]) {
+                cart[name].qty += 1;
+            } else {
+                cart[name] = { price: price, qty: 1 };
+            }
+            updateCartUI();
+            if (navigator.vibrate) navigator.vibrate(50);
+        }
+
+        function updateQty(name, delta) {
+            if (cart[name]) {
+                cart[name].qty += delta;
+                if (cart[name].qty <= 0) delete cart[name]; 
+                updateCartUI();
+                if (navigator.vibrate) navigator.vibrate(30);
+            }
+        }
+
+        function updateCartUI() {
+            let total = 0;
+            let itemsCount = 0;
+            let htmlList = '';
+            let waText = "Ciao! Vorrei fare un ordine d'asporto:%0A%0A";
+
+            for (let name in cart) {
+                let item = cart[name];
+                let itemTotal = item.price * item.qty;
+                total += itemTotal;
+                itemsCount += item.qty;
+
+                htmlList += `
+                <div class="cart-item-row">
+                    <div class="cart-item-info">
+                        <div class="cart-item-title">${name}</div>
+                        <div class="cart-item-price">€ ${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="cart-qty-controls">
+                        <button class="qty-btn" onclick="updateQty('${name}', -1)">-</button>
+                        <span class="qty-val">${item.qty}</span>
+                        <button class="qty-btn" onclick="updateQty('${name}', 1)" style="color:var(--accent);">+</button>
+                    </div>
+                </div>`;
+                waText += `${item.qty}x ${name} - € ${itemTotal.toFixed(2)}%0A`;
+            }
+
+            const container = document.getElementById('cart-items-container');
+            const emptyMsg = document.getElementById('cart-empty-msg');
+            const btnPc = document.getElementById('wa-btn-pc');
+            
+            container.innerHTML = htmlList;
+            document.getElementById('pc-total').innerText = '€ ' + total.toFixed(2);
+
+            const mobBar = document.getElementById('mobile-cart-bar');
+            const btnMob = document.getElementById('wa-btn-mob');
+            const mobTotal = document.getElementById('mobile-total');
+            
+            document.getElementById('mobile-count').innerText = itemsCount;
+            mobTotal.innerText = '€ ' + total.toFixed(2);
+
+            mobTotal.classList.remove('pop-anim');
+            void mobTotal.offsetWidth; 
+            mobTotal.classList.add('pop-anim');
+
+            if (itemsCount > 0) {
+                emptyMsg.style.display = 'none';
+                btnPc.classList.add('active');
+                
+                waText += `%0A*Totale: € ${total.toFixed(2)}*%0A%0AAttendo conferma, grazie!`;
+                let waLink = `https://wa.me/${PHONE_NUMBER}?text=${waText}`;
+                
+                btnPc.href = waLink;
+                btnMob.href = waLink;
+
+                if(window.innerWidth < 992) mobBar.style.display = 'flex';
+            } else {
+                emptyMsg.style.display = 'block';
+                btnPc.classList.remove('active');
+                btnPc.href = '#';
+                mobBar.style.display = 'none';
+            }
+        }
+
+        function filterMenu(category) {
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Ricalcola la visualizzazione del carrello se l'utente gira lo schermo
+        window.addEventListener('resize', () => {
+            const mobBar = document.getElementById('mobile-cart-bar');
+            if (window.innerWidth >= 992) {
+                mobBar.style.display = 'none';
+            } else if (Object.keys(cart).length > 0) {
+                mobBar.style.display = 'flex';
+            }
+        });
+    </script>
+</body>
+</html>
