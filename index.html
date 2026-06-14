@@ -356,8 +356,125 @@
     .hero-stats-mini { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
     @media(max-width:900px){ .hero-mascot-img{max-width:220px} }
 
+    /* ====== HAMBURGER ====== */
+    .nav-hamburger { display:none; flex-direction:column; justify-content:center; gap:5px; cursor:pointer; padding:8px; background:none; border:none; width:40px; height:40px; flex-shrink:0; }
+    .nav-hamburger span { width:22px; height:2px; background:var(--cream); border-radius:2px; transition:transform .3s ease,opacity .3s ease; display:block; }
+    .nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+    .nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
 
-  </style>
+    /* ====== MOBILE ====== */
+    @media(max-width:768px){
+      /* Hamburger */
+      .nav-hamburger { display:flex; }
+      .nav-links {
+        display:none; position:fixed; top:64px; left:0; right:0;
+        background:rgba(8,15,10,0.98); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+        flex-direction:column; padding:12px 0 20px; gap:0;
+        border-bottom:1px solid var(--border); z-index:89;
+        box-shadow:0 16px 40px rgba(0,0,0,0.6);
+      }
+      .nav-links.open { display:flex; }
+      .nav-links a { padding:14px 24px; border-bottom:1px solid rgba(201,146,42,0.08); font-size:15px; color:var(--cream); }
+      .nav-links a:last-child { border-bottom:none; }
+      .nav-cta { margin:12px 24px 0 !important; text-align:center !important; justify-content:center !important; padding:13px 20px !important; font-size:14px !important; border-radius:10px; }
+
+      /* Hero */
+      .hero { padding:48px 16px 56px; min-height:auto; }
+      .hero-inner { grid-template-columns:1fr; gap:40px; }
+      .hero h1 { font-size:clamp(28px,8vw,44px); letter-spacing:-1px; }
+      .hero-sub { font-size:16px; margin-bottom:28px; }
+      .hero-ctas { flex-direction:column; gap:12px; margin-bottom:32px; }
+      .btn-gold, .btn-outline { width:100%; justify-content:center; font-size:14px; padding:14px 20px; }
+      .zero-num { font-size:clamp(52px,14vw,72px); }
+      .hero-right { align-items:center; gap:20px; }
+      .hero-mascot-img { max-width:180px; margin-bottom:12px; }
+      .hero-stats-mini { grid-template-columns:1fr 1fr; gap:10px; width:100%; }
+      .hsc { padding:14px 12px; gap:10px; }
+      .hsc-icon { font-size:22px; }
+      .hsc-val { font-size:20px; }
+      .hsc-desc { font-size:11px; }
+
+      /* Ticker */
+      .ticker-item { font-size:11px; padding:0 18px; }
+
+      /* Proof bar */
+      .proof-inner { flex-direction:column; align-items:flex-start; gap:16px; }
+      .proof-logos { gap:10px; }
+      .proof-logo { padding:8px 12px; font-size:10px; }
+
+      /* Sections */
+      section { padding:64px 16px; }
+      .clients { padding:64px 16px; }
+      .section-title { font-size:clamp(24px,7vw,38px); letter-spacing:-1px; }
+      .section-sub { font-size:15px; }
+
+      /* Commission cards */
+      .commission-cards { grid-template-columns:1fr; gap:14px; }
+      .cc-percent { font-size:44px; }
+      .savings-counter { padding:32px 20px; }
+
+      /* Steps */
+      .steps { gap:28px; }
+
+      /* Features */
+      .features-grid { grid-template-columns:1fr; gap:16px; }
+      .feature-card { padding:24px 20px; }
+
+      /* Comparison table */
+      .comparison-table-wrap { -webkit-overflow-scrolling:touch; }
+      table { min-width:520px; }
+      thead th, td { padding:14px 14px; font-size:13px; }
+
+      /* Demo */
+      .demo-inner { grid-template-columns:1fr; gap:36px; }
+      .mockup-body { padding:16px; }
+      .mockup-stats { gap:8px; }
+      .ms-val { font-size:18px; }
+
+      /* Testimonials */
+      .testimonials-grid { grid-template-columns:1fr; gap:16px; }
+      .tc-text { font-size:15px; }
+
+      /* Pricing */
+      .pricing-card { padding:36px 20px; }
+      .pc-title { font-size:clamp(26px,7vw,40px); }
+      .pc-cta { font-size:15px; padding:16px 24px; width:100%; justify-content:center; }
+      .pc-features { max-width:100%; }
+
+      /* FAQ */
+      .faq-question { font-size:14px; padding:18px 16px; }
+      .faq-answer-inner { padding:0 16px 18px; }
+
+      /* Footer CTA */
+      .footer-cta { padding:60px 16px; }
+      .fcta-title { font-size:clamp(26px,8vw,44px); }
+      .btn-fcta { width:100%; justify-content:center; font-size:14px; padding:16px 20px; }
+
+      /* Footer */
+      footer { padding:48px 16px 24px; }
+      .footer-grid { grid-template-columns:1fr; gap:32px; }
+      .footer-bottom { flex-direction:column; align-items:flex-start; gap:8px; }
+
+      /* WhatsApp float */
+      .wa-float { bottom:16px; right:16px; width:52px; height:52px; }
+      .wa-float svg { width:28px; height:28px; }
+      .wa-tooltip { display:none; }
+    }
+
+    @media(max-width:400px){
+      .hero-stats-mini { grid-template-columns:1fr; }
+      .hsc-val { font-size:18px; }
+      .clients-grid { grid-template-columns:1fr; }
+    }
+
+    @media(min-width:769px) and (max-width:1024px){
+      .hero-inner { gap:36px; }
+      .hero h1 { font-size:clamp(30px,4.5vw,52px); }
+      .features-grid { grid-template-columns:repeat(2,1fr); }
+      .footer-grid { grid-template-columns:1.5fr 1fr 1fr 1fr; gap:28px; }
+    }
+
 </head>
 <body>
 
@@ -389,7 +506,7 @@
     <a href="/" class="nav-logo" aria-label="VetrinaFlash — Home">
       <img src="images/vetrinaflashlogo.png" alt="VetrinaFlash" class="nav-logo-img" />
     </a>
-    <div class="nav-links">
+    <div class="nav-links" id="nav-links">
       <a href="#come-funziona">Come funziona</a>
       <a href="#features">Funzionalità</a>
       <a href="#confronto">Confronto</a>
@@ -397,6 +514,9 @@
       <a href="#faq">FAQ</a>
       <a href="https://wa.me/393505383769?text=Ciao!%20Vorrei%20saperne%20di%20più%20su%20VetrinaFlash" target="_blank" rel="noopener" class="nav-cta">Parla con noi</a>
     </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -946,6 +1066,35 @@
 <script>
 (function(){
   'use strict';
+
+  // HAMBURGER MENU
+  var hamburger = document.getElementById('nav-hamburger');
+  var navLinks = document.getElementById('nav-links');
+  if(hamburger && navLinks){
+    hamburger.addEventListener('click', function(){
+      var isOpen = navLinks.classList.contains('open');
+      navLinks.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', String(!isOpen));
+      document.body.style.overflow = isOpen ? '' : 'hidden';
+    });
+    navLinks.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click', function(){
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded','false');
+        document.body.style.overflow = '';
+      });
+    });
+    document.addEventListener('click', function(e){
+      if(!navLinks.contains(e.target) && !hamburger.contains(e.target)){
+        navLinks.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded','false');
+        document.body.style.overflow = '';
+      }
+    });
+  }
 
   // HERO CANVAS — particle network con palette verde/oro
   var canvas = document.getElementById('hero-canvas');
