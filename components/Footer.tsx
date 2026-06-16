@@ -1,127 +1,88 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
-import { MessageCircle, AtSign } from "lucide-react";
 
-const footerLinks = {
-  Prodotto: [
-    { label: "Come Funziona", href: "#solution" },
-    { label: "Funzionalità", href: "#features" },
-    { label: "Demo Live", href: "#demo" },
-    { label: "Prezzi", href: "#cta" },
-  ],
-  "Per chi è": [
-    { label: "Ristoranti", href: "#" },
-    { label: "Pizzerie", href: "#" },
-    { label: "Pub & Bar", href: "#" },
-    { label: "Beach Club", href: "#" },
-    { label: "Cocktail Bar", href: "#" },
-  ],
-  Azienda: [
-    { label: "Chi Siamo", href: "#" },
-    { label: "Blog", href: "#" },
-    { label: "Lavora con noi", href: "#" },
-    { label: "Contatti", href: "#" },
-  ],
-  Legale: [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Termini di Servizio", href: "#" },
-    { label: "Cookie Policy", href: "#" },
-    { label: "GDPR", href: "#" },
-  ],
-};
+const productLinks = [
+  { label: "Come funziona", href: "#come-funziona" },
+  { label: "Funzionalità", href: "#funzionalita" },
+  { label: "I nostri clienti", href: "#clienti" },
+  { label: "Preventivo", href: "#preventivo" },
+];
+
+const clientLinks = [
+  { label: "'N Farinati", href: "https://nfarinatimodernpizza.it" },
+  { label: "TORB", href: "https://torbcaserta.it" },
+  { label: "Peter Bun", href: "https://peterbuns.it" },
+];
 
 export default function Footer() {
   return (
-    <footer className="relative border-t border-white/6 overflow-hidden">
-      {/* Top glow */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7CFF00]/30 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_30%_at_50%_0%,rgba(124,255,0,0.03),transparent)]" />
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main footer content */}
-        <div className="pt-16 pb-12 flex flex-col lg:flex-row gap-10">
-          {/* Brand col */}
-          <div className="lg:w-[340px] shrink-0">
-            <div className="flex items-center gap-3 mb-5">
-              <div className="relative w-9 h-9">
-                <div className="absolute inset-0 rounded-full bg-[#7CFF00]/20 blur-md" />
-                <Image
-                  src="/logo.png"
-                  alt="VetrinaFlash"
-                  width={36}
-                  height={36}
-                  className="relative z-10 rounded-full object-contain"
-                />
-              </div>
-              <span className="font-bold text-lg">
-                <span className="text-white">Vetrina</span>
-                <span className="text-[#7CFF00]">Flash</span>
-                <span className="text-white/40 text-sm">.it</span>
+    <footer className="relative border-t border-[var(--ink-line)] pt-16 pb-10">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="lg:col-span-1">
+            <a href="#" className="flex items-center gap-2.5">
+              <Image src="/images/logo-mascot.png" alt="VetrinaFlash" width={32} height={32} className="rounded-md" />
+              <span className="font-display font-extrabold text-lg text-cream">
+                Vetrina<span className="text-ember">Flash</span>
               </span>
-            </div>
-
-            <p className="text-white/40 text-sm leading-relaxed mb-6 max-w-xs">
-              La piattaforma AI che automatizza WhatsApp, Instagram e prenotazioni per ristoranti e
-              locali italiani. Più clienti. Meno stress.
+            </a>
+            <p className="text-ash text-sm mt-4 leading-relaxed max-w-xs">
+              Ordini diretti per asporto e delivery, menu digitale e
+              pagamenti integrati per ristoranti e bar italiani. Una tantum,
+              0% commissioni.
             </p>
-
-            {/* Social + Contact */}
-            <div className="flex gap-3 mb-6">
-              <a
-                href="https://wa.me/39XXXXXXXXXX"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-[#25D366]/10 border border-[#25D366]/20 flex items-center justify-center hover:bg-[#25D366]/20 transition-colors"
-              >
-                <MessageCircle className="w-4 h-4 text-[#25D366]" />
-              </a>
-              <a
-                href="https://instagram.com/vetrinaflash"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-xl bg-[#E1306C]/10 border border-[#E1306C]/20 flex items-center justify-center hover:bg-[#E1306C]/20 transition-colors"
-              >
-                <AtSign className="w-4 h-4 text-[#E1306C]" />
-              </a>
-            </div>
-
-            <div className="flex items-center gap-2 text-xs text-white/30">
-              <span className="w-2 h-2 rounded-full bg-[#7CFF00] animate-pulse" />
-              Sistema AI operativo · 500+ locali attivi
-            </div>
+            <p className="font-mono text-[11px] text-ash-dim mt-4">
+              🔒 SSL · ✅ GDPR · 🇮🇹 Made in Italy
+            </p>
           </div>
 
-          {/* Link columns */}
-          <div className="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-8">
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category} className="col-span-1">
-              <h4 className="text-white/60 text-xs font-semibold uppercase tracking-wider mb-4">
-                {category}
-              </h4>
-              <ul className="flex flex-col gap-3">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-white/35 text-sm hover:text-white/70 transition-colors duration-200"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div>
+            <p className="font-mono text-xs tracking-widest text-ash-dim uppercase mb-4">Prodotto</p>
+            <ul className="space-y-2.5">
+              {productLinks.map((l) => (
+                <li key={l.href}>
+                  <a href={l.href} className="text-ash text-sm hover:text-cream transition-colors">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="font-mono text-xs tracking-widest text-ash-dim uppercase mb-4">Locali che usano VetrinaFlash</p>
+            <ul className="space-y-2.5">
+              {clientLinks.map((l) => (
+                <li key={l.href}>
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-ash text-sm hover:text-cream transition-colors"
+                  >
+                    {l.label} ↗
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <p className="font-mono text-xs tracking-widest text-ash-dim uppercase mb-4">Contatti</p>
+            <ul className="space-y-2.5">
+              <li>
+                <a href="https://wa.me/393505383769" target="_blank" rel="noopener noreferrer" className="text-ash text-sm hover:text-cream transition-colors">
+                  WhatsApp: 350 538 3769
+                </a>
+              </li>
+              <li><a href="#" className="text-ash text-sm hover:text-cream transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="text-ash text-sm hover:text-cream transition-colors">Termini di Servizio</a></li>
+            </ul>
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="py-6 border-t border-white/5 flex items-center justify-center">
-          <p className="text-white/25 text-xs text-center">
-            © {new Date().getFullYear()} VetrinaFlash.it — Tutti i diritti riservati
-          </p>
+        <div className="mt-14 pt-6 border-t border-[var(--ink-line)] flex flex-col sm:flex-row justify-between gap-3 text-xs text-ash-dim">
+          <p>© {new Date().getFullYear()} VetrinaFlash · Sistema ordini diretti, 0% commissioni</p>
+          <p>Investimento una tantum</p>
         </div>
       </div>
     </footer>

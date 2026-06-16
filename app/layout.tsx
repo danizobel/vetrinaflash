@@ -1,35 +1,44 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Big_Shoulders, Space_Mono, Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bigShoulders = Big_Shoulders({
+  variable: "--font-shoulders",
   subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
   subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "VetrinaFlash.it — Automatizza WhatsApp, Instagram e Prenotazioni con l'AI",
+  metadataBase: new URL("https://vetrinaflash.it"),
+  title: "VetrinaFlash — Ordini diretti per asporto e delivery. 0% commissioni.",
   description:
-    "Più clienti, meno stress. Automatizza le risposte su WhatsApp e Instagram, gestisci le prenotazioni e aumenta le vendite del tuo locale con l'intelligenza artificiale.",
+    "Il sistema per ricevere ordini di asporto e delivery senza pagare commissioni alle piattaforme. Pagamenti integrati, investimento una tantum, attivo in poche ore.",
   keywords:
-    "automazione whatsapp ristorante, AI chatbot pizzeria, prenotazioni automatiche, instagram automation locale, vetrinaflash",
+    "ordini asporto online, delivery senza commissioni, alternativa JustEat, alternativa Glovo, alternativa Deliveroo, sistema ordini ristorante, menu digitale QR",
   openGraph: {
-    title: "VetrinaFlash.it — AI per Ristoranti e Locali",
-    description: "Automatizza ogni messaggio. Trasforma ogni cliente.",
+    title: "VetrinaFlash — Ordini diretti per asporto e delivery. 0% commissioni.",
+    description: "Il tuo locale incassa il 100% di ogni ordine. Investimento una tantum, nessun canone.",
     url: "https://vetrinaflash.it",
-    siteName: "VetrinaFlash.it",
+    siteName: "VetrinaFlash",
     locale: "it_IT",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "VetrinaFlash.it",
-    description: "AI automation per ristoranti, pizzerie e locali.",
+    title: "VetrinaFlash",
+    description: "Ordini diretti per asporto e delivery. 0% commissioni, per sempre.",
   },
   robots: { index: true, follow: true },
 };
@@ -40,8 +49,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className="bg-[#050508] text-white overflow-x-hidden antialiased">{children}</body>
+    <html lang="it" className={`${bigShoulders.variable} ${spaceMono.variable} ${inter.variable}`}>
+      <body className="bg-ink text-cream antialiased">{children}</body>
     </html>
   );
 }

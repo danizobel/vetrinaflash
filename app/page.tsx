@@ -1,26 +1,24 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import ProblemSection from "@/components/ProblemSection";
-import SolutionSection from "@/components/SolutionSection";
+import HowItWorksSection from "@/components/HowItWorksSection";
 import FeaturesSection from "@/components/FeaturesSection";
-import ChatDemoSection from "@/components/ChatDemoSection";
-import BenefitsSection from "@/components/BenefitsSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
+import ClientsSection from "@/components/ClientsSection";
+import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="relative bg-[#050508] min-h-screen">
+    <main className="relative bg-ink min-h-screen grain">
       <Navbar />
       <HeroSection />
       <ProblemSection />
-      <SolutionSection />
+      <HowItWorksSection />
       <FeaturesSection />
-      <ChatDemoSection />
-      <BenefitsSection />
-      <TestimonialsSection />
+      <ClientsSection />
+      <PricingSection />
       <FAQSection />
       <CTASection />
       <Footer />

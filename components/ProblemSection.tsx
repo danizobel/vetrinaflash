@@ -1,201 +1,143 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { Clock, MessageCircleOff, CalendarX, TrendingDown, Smartphone, DollarSign } from "lucide-react";
+import { motion } from "framer-motion";
+import { Check, X } from "lucide-react";
 
-const problems = [
-  {
-    icon: Clock,
-    title: "Rispondi troppo tardi",
-    description:
-      "Il cliente aspetta 30 minuti la tua risposta su WhatsApp. Nel frattempo, ha già prenotato dalla concorrenza.",
-    stat: "74%",
-    statLabel: "dei clienti abbandona se non risponde entro 5 min",
-    color: "#FF4444",
-    delay: 0,
-  },
-  {
-    icon: MessageCircleOff,
-    title: "DM ignorati su Instagram",
-    description:
-      "Decine di messaggi in arrivo ogni giorno. Menu richiesti, informazioni, prenotazioni. Impossibile gestirli tutti.",
-    stat: "60%",
-    statLabel: "dei messaggi Instagram rimangono senza risposta",
-    color: "#FF6B35",
-    delay: 0.1,
-  },
-  {
-    icon: CalendarX,
-    title: "Prenotazioni perse",
-    description:
-      "Un cliente chiama mentre sei in cucina. Nessuno risponde. La prenotazione va persa. E con lei, una serata intera di incasso.",
-    stat: "1 su 3",
-    statLabel: "prenotazioni perse per mancata risposta",
-    color: "#FF4444",
-    delay: 0.2,
-  },
-  {
-    icon: TrendingDown,
-    title: "Margini distrutti dal delivery",
-    description:
-      "Glovo, Uber Eats, Deliveroo: paghi il 30% di commissione su ogni ordine. I clienti li hai tu, ma i soldi li prendono loro.",
-    stat: "30%",
-    statLabel: "di commissione media per ogni ordine delivery",
-    color: "#FF6B35",
-    delay: 0.3,
-  },
-  {
-    icon: Smartphone,
-    title: "Gestisci tutto da solo",
-    description:
-      "Telefono, WhatsApp, Instagram, email, recensioni. Un dipendente a tempo pieno sarebbe necessario solo per le comunicazioni.",
-    stat: "4h/giorno",
-    statLabel: "perse in comunicazioni manuali",
-    color: "#FF4444",
-    delay: 0.4,
-  },
-  {
-    icon: DollarSign,
-    title: "Soldi lasciati sul tavolo",
-    description:
-      "Ogni messaggio senza risposta è un cliente perso. Ogni cliente perso è fatturato che non ritornerà mai più al tuo locale.",
-    stat: "€ 2.400",
-    statLabel: "persi al mese in media per ogni locale non automatizzato",
-    color: "#FF6B35",
-    delay: 0.5,
-  },
+const compareRows = [
+  { label: "Commissione per ordine", justeat: "~30%", glovo: "~35%", deliveroo: "~32%", vf: "0%" },
+  { label: "Costo mensile (15 ordini/g)", justeat: "~€337", glovo: "~€394", deliveroo: "~€360", vf: "Una tantum" },
+  { label: "Dati del cliente tuoi", justeat: false, glovo: false, deliveroo: false, vf: true },
+  { label: "Pagamenti diretti integrati", justeat: false, glovo: false, deliveroo: false, vf: true },
+  { label: "Nessun canone mensile", justeat: false, glovo: false, deliveroo: false, vf: true },
 ];
 
-function ProblemCard({
-  problem,
-  index,
-}: {
-  problem: (typeof problems)[0];
-  index: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-10%" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: problem.delay, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative p-6 rounded-2xl border border-white/8 bg-white/2 hover:bg-white/4 hover:border-white/15 transition-all duration-300 overflow-hidden"
-    >
-      {/* Background glow on hover */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
-        style={{
-          background: `radial-gradient(circle at 30% 50%, ${problem.color}08 0%, transparent 70%)`,
-        }}
-      />
-
-      {/* Number */}
-      <div className="absolute top-4 right-4 text-5xl font-black text-white/3 leading-none">
-        {String(index + 1).padStart(2, "0")}
-      </div>
-
-      {/* Icon */}
-      <div
-        className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
-        style={{
-          background: `${problem.color}15`,
-          border: `1px solid ${problem.color}25`,
-        }}
-      >
-        <problem.icon className="w-6 h-6" style={{ color: problem.color }} />
-      </div>
-
-      {/* Content */}
-      <h3 className="text-white font-bold text-lg mb-2">{problem.title}</h3>
-      <p className="text-white/50 text-sm leading-relaxed mb-5">{problem.description}</p>
-
-      {/* Stat */}
-      <div
-        className="inline-flex flex-col px-4 py-3 rounded-xl"
-        style={{ background: `${problem.color}10`, border: `1px solid ${problem.color}20` }}
-      >
-        <span className="font-black text-2xl" style={{ color: problem.color }}>
-          {problem.stat}
-        </span>
-        <span className="text-white/40 text-xs leading-snug mt-0.5">{problem.statLabel}</span>
-      </div>
-    </motion.div>
-  );
+function Cell({ value }: { value: string | boolean }) {
+  if (typeof value === "boolean") {
+    return value ? (
+      <Check size={16} className="text-gold mx-auto" />
+    ) : (
+      <X size={16} className="text-ash-dim mx-auto" />
+    );
+  }
+  return <span>{value}</span>;
 }
 
 export default function ProblemSection() {
-  const headingRef = useRef<HTMLDivElement>(null);
-  const headingInView = useInView(headingRef, { once: true, margin: "-10%" });
-
   return (
-    <section id="problem" className="relative py-24 md:py-32 overflow-hidden">
-      {/* Section background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_100%,rgba(255,50,50,0.04),transparent)]" />
+    <section id="problema" className="relative py-24 md:py-32">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
+          className="max-w-2xl"
+        >
+          <p className="font-mono text-xs tracking-widest text-rust uppercase mb-4">
+            Il problema vero
+          </p>
+          <h2 className="font-display font-black uppercase text-[clamp(2rem,5vw,3.2rem)] leading-[0.98] text-cream">
+            Stesso ordine.
+            <br />
+            Incasso diverso.
+          </h2>
+          <p className="mt-5 text-ash text-lg">
+            Per ogni ordine che arriva da una piattaforma esterna, cedi fino a
+            un terzo dell&apos;incasso. Non è una commissione: è un affitto
+            che non finisce mai.
+          </p>
+        </motion.div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
-        <div ref={headingRef} className="text-center mb-16">
+        {/* Receipt comparison */}
+        <div className="mt-16 grid sm:grid-cols-2 gap-10 max-w-2xl">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={headingInView ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, y: 20, rotate: -1.5 }}
+            whileInView={{ opacity: 1, y: 0, rotate: -1.5 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium mb-6"
+            className="ticket px-6 pt-6 pb-9 font-mono text-[13px]"
           >
-            <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
-            Il Problema
+            <p className="font-bold tracking-widest text-[11px] mb-3">PIATTAFORMA DELIVERY</p>
+            <div className="ticket-line py-1.5 flex justify-between">
+              <span>Ordine</span><span>€30,00</span>
+            </div>
+            <div className="ticket-line py-1.5 flex justify-between text-rust">
+              <span>Commissione (35%)</span><span>-€10,50</span>
+            </div>
+            <div className="mt-3 pt-3 border-t-2 border-dashed border-[#2a2118]/30 flex justify-between font-bold text-base">
+              <span>Incassi tu</span><span>€19,50</span>
+            </div>
           </motion.div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 30 }}
-            animate={headingInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white mb-6"
+          <motion.div
+            initial={{ opacity: 0, y: 20, rotate: 1.5 }}
+            whileInView={{ opacity: 1, y: 0, rotate: 1.5 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="ticket px-6 pt-6 pb-9 font-mono text-[13px]"
           >
-            Ogni messaggio ignorato
-            <br />
-            <span className="text-red-400">è un cliente perso.</span>
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={headingInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-white/50 text-lg max-w-2xl mx-auto"
-          >
-            Ogni giorno, i locali come il tuo perdono clienti, prenotazioni e fatturato — non perché
-            il cibo sia cattivo, ma perché nessuno risponde abbastanza in fretta.
-          </motion.p>
+            <p className="font-bold tracking-widest text-[11px] mb-3">VETRINAFLASH</p>
+            <div className="ticket-line py-1.5 flex justify-between">
+              <span>Ordine</span><span>€30,00</span>
+            </div>
+            <div className="ticket-line py-1.5 flex justify-between text-[#5c5040]">
+              <span>Commissione</span><span>€0,00</span>
+            </div>
+            <div className="mt-3 pt-3 border-t-2 border-dashed border-[#2a2118]/30 flex justify-between font-bold text-base text-ember">
+              <span>Incassi tu</span><span>€30,00</span>
+            </div>
+          </motion.div>
         </div>
 
-        {/* Problem cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {problems.map((problem, i) => (
-            <ProblemCard key={problem.title} problem={problem} index={i} />
-          ))}
-        </div>
-
-        {/* Bottom CTA */}
+        {/* Savings stat */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16 text-center"
+          transition={{ duration: 0.5 }}
+          className="mt-12 rounded-md border border-[var(--ink-line)] bg-ink-soft px-7 py-7 sm:px-9 sm:py-8 flex flex-col sm:flex-row sm:items-center gap-6 max-w-3xl"
         >
-          <div className="inline-block p-px rounded-2xl bg-gradient-to-r from-[#7CFF00]/20 via-[#7CFF00]/40 to-[#7CFF00]/20">
-            <div className="bg-[#050508] rounded-2xl px-8 py-6">
-              <p className="text-white/60 text-lg mb-2">
-                Esiste una soluzione che risolve tutto questo.
-              </p>
-              <p className="text-2xl font-black text-[#7CFF00]">
-                Automaticamente. 24 ore su 24.
-              </p>
-            </div>
-          </div>
+          <p className="font-display font-black text-ember text-[clamp(2.4rem,5vw,3.4rem)] leading-none">
+            €40.000+
+          </p>
+          <p className="text-ash text-sm sm:text-base">
+            è quanto un locale con 15 ordini al giorno da €25 medi regala alle
+            piattaforme ogni anno, con una commissione media del 30%. Stima
+            indicativa su volumi medi di un locale tipo.
+          </p>
+        </motion.div>
+
+        {/* Comparison table */}
+        <motion.div
+          id="confronto"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-16 overflow-x-auto"
+        >
+          <table className="w-full min-w-[560px] text-sm border-collapse">
+            <thead>
+              <tr className="font-mono text-xs uppercase tracking-wide text-ash-dim border-b border-[var(--ink-line)]">
+                <th className="text-left py-3 pr-4 font-normal">Caratteristica</th>
+                <th className="py-3 px-3 font-normal">JustEat</th>
+                <th className="py-3 px-3 font-normal">Glovo</th>
+                <th className="py-3 px-3 font-normal">Deliveroo</th>
+                <th className="py-3 px-3 font-normal text-gold">VetrinaFlash</th>
+              </tr>
+            </thead>
+            <tbody>
+              {compareRows.map((row) => (
+                <tr key={row.label} className="border-b border-[var(--ink-line)] text-center">
+                  <td className="text-left py-3.5 pr-4 text-cream">{row.label}</td>
+                  <td className="py-3.5 px-3 text-ash"><Cell value={row.justeat} /></td>
+                  <td className="py-3.5 px-3 text-ash"><Cell value={row.glovo} /></td>
+                  <td className="py-3.5 px-3 text-ash"><Cell value={row.deliveroo} /></td>
+                  <td className="py-3.5 px-3 text-gold font-semibold"><Cell value={row.vf} /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </motion.div>
       </div>
     </section>
