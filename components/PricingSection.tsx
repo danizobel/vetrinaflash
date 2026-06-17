@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Clock } from "lucide-react";
+import { useLeadForm } from "./LeadFormProvider";
 
 const included = [
   "Setup personalizzato sul tuo locale",
@@ -22,10 +23,8 @@ const addons = [
   "Servizio fotografico prodotti",
 ];
 
-const WHATSAPP_URL =
-  "https://wa.me/393505383769?text=Ciao!%20Vorrei%20un%20preventivo%20per%20VetrinaFlash%20per%20il%20mio%20locale";
-
 export default function PricingSection() {
+  const { open } = useLeadForm();
   return (
     <section id="preventivo" className="relative py-24 md:py-32">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
@@ -99,23 +98,33 @@ export default function PricingSection() {
           </motion.div>
         </div>
 
+        {/* Capacity note — honest, real constraint of a hands-on setup */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="mt-10 inline-flex items-center gap-2.5 rounded-sm border border-gold/25 bg-gold/10 px-4 py-2.5 font-mono text-xs text-gold"
+        >
+          <Clock size={14} />
+          Setup curato a mano: accettiamo un numero limitato di nuovi locali ogni mese
+        </motion.div>
+
         {/* CTA — price lives here, under the quote request */}
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.15 }}
-          className="mt-12 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10"
+          className="mt-6 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10"
         >
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => open()}
             className="group inline-flex items-center gap-2 rounded-sm bg-ember px-7 py-4 font-semibold text-ink hover:bg-gold transition-colors shrink-0"
           >
-            Richiedi il tuo preventivo su WhatsApp
+            Richiedi il tuo preventivo
             <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-          </a>
+          </button>
           <p className="font-mono text-xs text-ash-dim">
             Risposta entro poche ore · Preventivo gratuito e senza impegno · 350 538 3769
           </p>

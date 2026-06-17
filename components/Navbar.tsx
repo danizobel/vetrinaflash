@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import { useLeadForm } from "./LeadFormProvider";
 
 const navLinks = [
   { label: "Come funziona", href: "#come-funziona" },
@@ -13,10 +14,8 @@ const navLinks = [
   { label: "FAQ", href: "#faq" },
 ];
 
-const WHATSAPP_URL =
-  "https://wa.me/393505383769?text=Ciao!%20Vorrei%20saperne%20di%20pi%C3%B9%20su%20VetrinaFlash";
-
 export default function Navbar() {
+  const { open } = useLeadForm();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -60,14 +59,12 @@ export default function Navbar() {
           ))}
         </div>
 
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => open()}
           className="hidden lg:inline-flex items-center rounded-sm bg-ember px-4 py-2 text-sm font-semibold text-ink hover:bg-gold transition-colors"
         >
-          Parla con noi
-        </a>
+          Richiedi preventivo
+        </button>
 
         <button
           aria-label={mobileOpen ? "Chiudi il menu" : "Apri il menu"}
@@ -98,14 +95,15 @@ export default function Navbar() {
                   {l.label}
                 </a>
               ))}
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => {
+                  setMobileOpen(false);
+                  open();
+                }}
                 className="mt-2 inline-flex items-center justify-center rounded-sm bg-ember px-4 py-2.5 text-sm font-semibold text-ink"
               >
-                Parla con noi
-              </a>
+                Richiedi preventivo
+              </button>
             </div>
           </motion.div>
         )}

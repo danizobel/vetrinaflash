@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
+import SavingsCalculator from "./SavingsCalculator";
 
 const compareRows = [
   { label: "Commissione per ordine", justeat: "~30%", glovo: "~35%", deliveroo: "~32%", vf: "0%" },
@@ -89,23 +90,8 @@ export default function ProblemSection() {
           </motion.div>
         </div>
 
-        {/* Savings stat */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mt-12 rounded-md border border-[var(--ink-line)] bg-ink-soft px-7 py-7 sm:px-9 sm:py-8 flex flex-col sm:flex-row sm:items-center gap-6 max-w-3xl"
-        >
-          <p className="font-display font-black text-ember text-[clamp(2.4rem,5vw,3.4rem)] leading-none">
-            €40.000+
-          </p>
-          <p className="text-ash text-sm sm:text-base">
-            è quanto un locale con 15 ordini al giorno da €25 medi regala alle
-            piattaforme ogni anno, con una commissione media del 30%. Stima
-            indicativa su volumi medi di un locale tipo.
-          </p>
-        </motion.div>
+        {/* Interactive savings calculator */}
+        <SavingsCalculator />
 
         {/* Comparison table */}
         <motion.div

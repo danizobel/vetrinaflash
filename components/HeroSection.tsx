@@ -2,9 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, PlayCircle } from "lucide-react";
-
-const WHATSAPP_URL =
-  "https://wa.me/393505383769?text=Ciao!%20Vorrei%20una%20demo%20gratuita%20di%20VetrinaFlash";
+import { useLeadForm } from "./LeadFormProvider";
 
 const orderLines = [
   { label: "1x Pizza Margherita", value: "€8,00" },
@@ -15,6 +13,7 @@ const orderLines = [
 const paymentLogos = ["NEXI", "SUMUP", "STRIPE", "PAYPAL", "SATISPAY"];
 
 export default function HeroSection() {
+  const { open } = useLeadForm();
   return (
     <section className="relative pt-32 pb-20 md:pt-44 md:pb-28 overflow-hidden">
       <div className="absolute inset-0 dot-grid opacity-60" />
@@ -61,18 +60,28 @@ export default function HeroSection() {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-5 flex items-center gap-2 text-sm text-ash"
+          >
+            <span className="flex -space-x-1.5">
+              <span className="w-2 h-2 rounded-full bg-gold" />
+            </span>
+            3 locali già attivi in Campania · 0% commissioni dal giorno 1
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.25 }}
             className="mt-9 flex flex-wrap items-center gap-4"
           >
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => open()}
               className="group inline-flex items-center gap-2 rounded-sm bg-ember px-6 py-3.5 font-semibold text-ink hover:bg-gold transition-colors"
             >
               Richiedi una demo gratuita
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-            </a>
+            </button>
             <a
               href="#come-funziona"
               className="inline-flex items-center gap-2 rounded-sm border border-[var(--ink-line)] px-6 py-3.5 font-semibold text-cream hover:border-ash transition-colors"

@@ -82,9 +82,25 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
   );
 }
 
+function FAQJsonLd() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+  return (
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+  );
+}
+
 export default function FAQSection() {
   return (
     <section id="faq" className="relative py-24 md:py-32 bg-ink-soft">
+      <FAQJsonLd />
       <div className="max-w-3xl mx-auto px-5 sm:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
