@@ -8,7 +8,7 @@ const clients = [
   {
     name: "'N Farinati",
     category: "Modern Pizza & More",
-    location: "Caserta",
+    location: "Bagheria (PA)",
     logo: "/images/client-nfarinati.jpg",
     url: "https://nfarinatimodernpizza.it",
     quote:
@@ -26,7 +26,7 @@ const clients = [
   {
     name: "Peter Bun",
     category: "La 1ª Paninoteca Dolce d'Italia",
-    location: "Campania",
+    location: "Caserta",
     logo: "/images/client-peterbun.png",
     url: "https://peterbuns.it",
     quote:

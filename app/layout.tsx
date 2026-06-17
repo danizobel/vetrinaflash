@@ -5,7 +5,7 @@ import "./globals.css";
 const bigShoulders = Big_Shoulders({
   variable: "--font-shoulders",
   subsets: ["latin"],
-  weight: ["600", "700", "800", "900"],
+  weight: ["700", "800", "900"],
 });
 
 const spaceMono = Space_Mono({

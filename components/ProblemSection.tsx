@@ -5,11 +5,11 @@ import { Check, X } from "lucide-react";
 import SavingsCalculator from "./SavingsCalculator";
 
 const compareRows = [
-  { label: "Commissione per ordine", justeat: "~30%", glovo: "~35%", deliveroo: "~32%", vf: "0%" },
-  { label: "Costo mensile (15 ordini/g)", justeat: "~€337", glovo: "~€394", deliveroo: "~€360", vf: "Una tantum" },
-  { label: "Dati del cliente tuoi", justeat: false, glovo: false, deliveroo: false, vf: true },
-  { label: "Pagamenti diretti integrati", justeat: false, glovo: false, deliveroo: false, vf: true },
-  { label: "Nessun canone mensile", justeat: false, glovo: false, deliveroo: false, vf: true },
+  { label: "Commissione per ordine", platforms: "30–35%", justeat: "~30%", glovo: "~35%", deliveroo: "~32%", vf: "0%" },
+  { label: "Costo mensile (15 ordini/g)", platforms: "€337–394", justeat: "~€337", glovo: "~€394", deliveroo: "~€360", vf: "Una tantum" },
+  { label: "Dati del cliente tuoi", platforms: false, justeat: false, glovo: false, deliveroo: false, vf: true },
+  { label: "Pagamenti diretti integrati", platforms: false, justeat: false, glovo: false, deliveroo: false, vf: true },
+  { label: "Nessun canone mensile", platforms: false, justeat: false, glovo: false, deliveroo: false, vf: true },
 ];
 
 function Cell({ value }: { value: string | boolean }) {
@@ -93,37 +93,62 @@ export default function ProblemSection() {
         {/* Interactive savings calculator */}
         <SavingsCalculator />
 
-        {/* Comparison table */}
+        {/* Comparison: stacked cards on mobile, full table on desktop */}
         <motion.div
           id="confronto"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mt-16 overflow-x-auto"
+          className="mt-16"
         >
-          <table className="w-full min-w-[560px] text-sm border-collapse">
-            <thead>
-              <tr className="font-mono text-xs uppercase tracking-wide text-ash-dim border-b border-[var(--ink-line)]">
-                <th className="text-left py-3 pr-4 font-normal">Caratteristica</th>
-                <th className="py-3 px-3 font-normal">JustEat</th>
-                <th className="py-3 px-3 font-normal">Glovo</th>
-                <th className="py-3 px-3 font-normal">Deliveroo</th>
-                <th className="py-3 px-3 font-normal text-gold">VetrinaFlash</th>
-              </tr>
-            </thead>
-            <tbody>
-              {compareRows.map((row) => (
-                <tr key={row.label} className="border-b border-[var(--ink-line)] text-center">
-                  <td className="text-left py-3.5 pr-4 text-cream">{row.label}</td>
-                  <td className="py-3.5 px-3 text-ash"><Cell value={row.justeat} /></td>
-                  <td className="py-3.5 px-3 text-ash"><Cell value={row.glovo} /></td>
-                  <td className="py-3.5 px-3 text-ash"><Cell value={row.deliveroo} /></td>
-                  <td className="py-3.5 px-3 text-gold font-semibold"><Cell value={row.vf} /></td>
+          {/* Mobile: simplified stacked comparison */}
+          <div className="sm:hidden flex flex-col gap-3">
+            {compareRows.map((row) => (
+              <div
+                key={row.label}
+                className="rounded-sm border border-[var(--ink-line)] bg-ink-soft px-4 py-4"
+              >
+                <p className="text-cream text-sm mb-3">{row.label}</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-sm bg-ink px-3 py-2.5">
+                    <p className="font-mono text-[10px] text-ash-dim uppercase mb-1">Piattaforme</p>
+                    <div className="text-ash text-sm"><Cell value={row.platforms} /></div>
+                  </div>
+                  <div className="rounded-sm bg-ember/10 border border-ember/20 px-3 py-2.5">
+                    <p className="font-mono text-[10px] text-gold uppercase mb-1">VetrinaFlash</p>
+                    <div className="text-gold font-semibold text-sm"><Cell value={row.vf} /></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Desktop: full detailed table */}
+          <div className="hidden sm:block overflow-x-auto">
+            <table className="w-full min-w-[560px] text-sm border-collapse">
+              <thead>
+                <tr className="font-mono text-xs uppercase tracking-wide text-ash-dim border-b border-[var(--ink-line)]">
+                  <th className="text-left py-3 pr-4 font-normal">Caratteristica</th>
+                  <th className="py-3 px-3 font-normal">JustEat</th>
+                  <th className="py-3 px-3 font-normal">Glovo</th>
+                  <th className="py-3 px-3 font-normal">Deliveroo</th>
+                  <th className="py-3 px-3 font-normal text-gold">VetrinaFlash</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {compareRows.map((row) => (
+                  <tr key={row.label} className="border-b border-[var(--ink-line)] text-center">
+                    <td className="text-left py-3.5 pr-4 text-cream">{row.label}</td>
+                    <td className="py-3.5 px-3 text-ash"><Cell value={row.justeat} /></td>
+                    <td className="py-3.5 px-3 text-ash"><Cell value={row.glovo} /></td>
+                    <td className="py-3.5 px-3 text-ash"><Cell value={row.deliveroo} /></td>
+                    <td className="py-3.5 px-3 text-gold font-semibold"><Cell value={row.vf} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -66,7 +66,7 @@ export default function HeroSection() {
             <span className="flex -space-x-1.5">
               <span className="w-2 h-2 rounded-full bg-gold" />
             </span>
-            3 locali già attivi in Campania · 0% commissioni dal giorno 1
+            3 locali già attivi in Italia · 0% commissioni dal giorno 1
           </motion.div>
 
           <motion.div
