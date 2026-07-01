@@ -1,102 +1,130 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { ArrowUpRight, Star } from "lucide-react";
+import { MapPin, BadgeCheck } from "lucide-react";
 
 const clients = [
   {
     name: "'N Farinati",
-    category: "Modern Pizza & More",
-    location: "Bagheria (PA)",
-    logo: "/images/client-nfarinati.jpg",
-    url: "https://nfarinatimodernpizza.it",
+    type: "Modern Pizza & More",
+    city: "Caserta",
+    logo: "/clients/nfarinati.jpg",
+    logoBg: "#2B4A2E",
     quote:
-      "Da quando usiamo VetrinaFlash i clienti ordinano direttamente per asporto e delivery. Zero commissioni a ogni pizza, e il menu si aggiorna in pochi secondi.",
+      "Da quando usiamo VetrinaFlash i clienti ordinano direttamente dal QR al tavolo. Zero commissioni a ogni pizza, e il menu si aggiorna in pochi secondi. Non torneremo mai più alle piattaforme.",
+    highlight: "Zero commissioni a ogni pizza",
   },
   {
     name: "TORB",
-    category: "Birreria Carnivora",
-    location: "Caserta",
-    logo: "/images/client-torb.png",
-    url: "https://torbcaserta.it",
+    type: "Birreria Carnivora",
+    city: "Caserta",
+    logo: "/clients/torb.png",
+    logoBg: "#ffffff",
     quote:
-      "Avere il menu sempre aggiornato è fondamentale per noi. Setup velocissimo, pannello intuitivo, ordini diretti senza pensieri.",
+      "Per una birreria carnivora come la nostra, avere il menu sempre aggiornato è fondamentale. Setup velocissimo, pannello intuitivo. I clienti adorano scansionare il QR direttamente al tavolo.",
+    highlight: "La birra arriva, le commissioni no",
   },
   {
     name: "Peter Bun",
-    category: "La 1ª Paninoteca Dolce d'Italia",
-    location: "Caserta",
-    logo: "/images/client-peterbun.png",
-    url: "https://peterbuns.it",
+    type: "La 1ª Paninoteca Dolce d'Italia",
+    city: "Campania",
+    logo: "/clients/peterbun.png",
+    logoBg: "#ffffff",
     quote:
-      "Essere la prima paninoteca dolce d'Italia significa essere innovativi. VetrinaFlash ci ha portato l'esperienza digitale anche nell'ordinazione.",
+      "Essere la prima paninoteca dolce d'Italia significa essere innovativi. VetrinaFlash ci ha permesso di portare l'esperienza digitale anche all'ordinazione. I clienti rimangono stupiti.",
+    highlight: "Dolce come i loro panini",
   },
 ];
 
 export default function ClientsSection() {
-  return (
-    <section id="clienti" className="relative py-24 md:py-32 bg-ink-soft">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-xl"
-        >
-          <p className="font-mono text-xs tracking-widest text-gold uppercase mb-4">Chi si fida di noi</p>
-          <h2 className="font-display font-black uppercase text-[clamp(2rem,5vw,3.2rem)] leading-[0.98] text-cream">
-            Locali reali.
-            <br />
-            Liberi dalle commissioni.
-          </h2>
-          <p className="mt-5 text-ash text-lg">
-            Non numeri inventati: questi locali usano VetrinaFlash ogni
-            giorno per incassare il 100% dei loro ordini.
-          </p>
-        </motion.div>
+  const headRef = useRef<HTMLDivElement>(null);
+  const headInView = useInView(headRef, { once: true, margin: "-10%" });
 
-        <div className="mt-16 grid md:grid-cols-3 gap-6">
+  return (
+    <section id="clienti" className="relative py-24 md:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(124,255,0,0.045),transparent)]" />
+
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <div ref={headRef} className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={headInView ? { opacity: 1, y: 0 } : {}}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-green text-[#7CFF00] text-[11px] font-semibold uppercase tracking-[0.2em] mb-6"
+          >
+            <BadgeCheck size={13} />
+            Chi si fida di noi
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={headInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.1 }}
+            className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
+          >
+            I nostri clienti. Reali.
+            <br />
+            <span className="neon-text">Liberi dalle commissioni.</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={headInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.2 }}
+            className="text-white/50 text-lg max-w-2xl mx-auto"
+          >
+            Non numeri inventati — questi sono i locali che ogni giorno usano
+            VetrinaFlash per incassare il{" "}
+            <span className="text-white font-medium">100% dei loro ordini</span>.
+          </motion.p>
+        </div>
+
+        {/* Cards */}
+        <div className="grid md:grid-cols-3 gap-6">
           {clients.map((c, i) => (
-            <motion.a
+            <motion.div
               key={c.name}
-              href={c.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 44 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group flex flex-col rounded-md border border-[var(--ink-line)] bg-ink p-7 hover:border-ember/40 transition-colors"
+              viewport={{ once: true, margin: "-8%" }}
+              transition={{ delay: i * 0.12, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -8 }}
+              className="group card-lux rounded-3xl p-8 flex flex-col text-center transition-shadow duration-300 hover:shadow-[0_0_48px_rgba(124,255,0,0.12)]"
             >
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-md bg-paper p-2 shrink-0 overflow-hidden relative">
-                  <Image src={c.logo} alt={`Logo ${c.name}`} fill className="object-contain p-1.5" />
-                </div>
-                <div>
-                  <p className="font-display font-bold text-lg text-cream">{c.name}</p>
-                  <p className="text-xs text-ash">{c.category}</p>
-                  <p className="text-xs text-ash-dim mt-0.5">📍 {c.location}</p>
-                </div>
+              {/* Logo */}
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: 1.5 }}
+                className="relative w-32 h-32 rounded-2xl mx-auto mb-7 overflow-hidden border border-white/10"
+                style={{ background: c.logoBg }}
+              >
+                <Image
+                  src={c.logo}
+                  alt={c.name}
+                  width={128}
+                  height={128}
+                  className="w-full h-full object-contain p-2"
+                />
+              </motion.div>
+
+              <h3 className="font-display text-white font-bold text-xl mb-1">
+                {c.name}
+              </h3>
+              <div className="text-[#7CFF00] text-[11px] font-semibold uppercase tracking-[0.15em] mb-2">
+                {c.type}
+              </div>
+              <div className="inline-flex items-center justify-center gap-1.5 text-white/35 text-xs mb-6">
+                <MapPin size={11} />
+                {c.city}
               </div>
 
-              <p className="text-ash text-sm mt-5 leading-relaxed flex-1">
+              <p className="text-white/55 text-sm leading-relaxed italic flex-1 mb-6 text-left border-l-2 border-[#7CFF00]/40 pl-4">
                 &ldquo;{c.quote}&rdquo;
               </p>
 
-              <div className="mt-5 flex items-center justify-between">
-                <div className="flex gap-0.5 text-gold">
-                  {Array.from({ length: 5 }).map((_, idx) => (
-                    <Star key={idx} size={13} fill="currentColor" strokeWidth={0} />
-                  ))}
-                </div>
-                <span className="inline-flex items-center gap-1 text-xs font-mono text-ash group-hover:text-ember transition-colors">
-                  Visita il sito
-                  <ArrowUpRight size={14} />
-                </span>
+              <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#7CFF00]/8 border border-[#7CFF00]/20 text-[#7CFF00] text-xs font-bold">
+                {c.highlight}
               </div>
-            </motion.a>
+            </motion.div>
           ))}
         </div>
       </div>

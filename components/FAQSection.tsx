@@ -1,68 +1,82 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState } from "react";
 import { ChevronDown, MessageCircle } from "lucide-react";
+import { PHONE_DISPLAY, WA_DEFAULT } from "@/lib/site";
 
 const faqs = [
   {
     q: "Cosa significa \"pagamento una tantum\"?",
-    a: "Paghi una volta sola, senza canoni mensili ricorrenti. Il sistema viene configurato sulle tue esigenze e poi è tuo. Il preventivo varia in base alla complessità del menu e alle funzionalità scelte.",
+    a: "Significa che paghi una volta sola, senza canoni mensili ricorrenti. Il sistema viene sviluppato e configurato sulle tue esigenze, e poi è tuo. Adattiamo il preventivo in base alla complessità del tuo menu e alle funzionalità che desideri.",
   },
   {
-    q: "Il sito serve solo per il delivery o anche per l'asporto?",
-    a: "Entrambi. Il cliente ordina online sia che voglia ritirare in negozio sia che voglia farsi consegnare l'ordine. Il flusso è lo stesso: ordina, paga, tu ricevi la notifica e incassi.",
+    q: "Devo installare qualcosa sul mio PC o tablet?",
+    a: "No. VetrinaFlash funziona completamente via browser. Apri il link, accedi con le tue credenziali, sei operativo. Funziona su qualsiasi dispositivo — tablet Android, iPad, PC Windows o Mac.",
   },
   {
-    q: "I miei clienti devono scaricare un'app?",
-    a: "No. Bastano browser e link: il cliente apre il tuo link, vede il menu, ordina, paga. Stessa semplicità di aprire una pagina web, nessuna registrazione obbligatoria.",
-  },
-  {
-    q: "Posso comunque avere un QR per gli ordini al tavolo?",
-    a: "Sì, è una funzione opzionale. Il cuore del sistema resta asporto e delivery via link diretto, ma se vuoi anche l'ordine in sala aggiungiamo un QR dedicato al tavolo nel tuo preventivo.",
+    q: "I miei clienti devono scaricare un'app per ordinare?",
+    a: "Assolutamente no. Il cliente scansiona il QR code con la fotocamera del telefono, vede il menu, sceglie i prodotti, paga. È la stessa semplicità di aprire un link. Nessuna app, nessuna registrazione.",
   },
   {
     q: "Come funzionano i pagamenti? I soldi dove vanno?",
-    a: "Tramite il tuo account Nexi, SumUp o Stripe. I soldi vanno direttamente sul tuo conto bancario: VetrinaFlash non tocca mai il denaro dei tuoi clienti, zero commissioni sulle transazioni oltre al gateway di pagamento scelto.",
+    a: "I pagamenti avvengono tramite il tuo account Nexi, SumUp o Stripe. I soldi vanno direttamente sul tuo conto bancario — VetrinaFlash non tocca mai il denaro dei tuoi clienti. Zero commissioni sulle transazioni, solo il tuo gateway di pagamento.",
   },
   {
     q: "Quanto tempo ci vuole per il setup?",
-    a: "Di solito tra i 15 minuti e qualche ora, in base alla complessità del menu. Ci occupiamo noi della configurazione iniziale e ti consegniamo il sistema già pronto all'uso.",
+    a: "Solitamente tra i 15 minuti e qualche ora, dipende dalla complessità del menu. Ci occupiamo noi della configurazione iniziale e ti consegniamo il sistema già pronto. Tu devi solo cominciare a usarlo.",
   },
   {
     q: "Posso continuare a usare JustEat o Glovo in parallelo?",
-    a: "Sì, nessuno ti obbliga a chiudere gli account sulle piattaforme esterne. Molti clienti usano VetrinaFlash in parallelo e riducono gradualmente la dipendenza man mano che gli ordini diretti crescono.",
+    a: "Sì. Nessuno ti obbliga a chiudere gli account sulle piattaforme esterne. Molti nostri clienti usano VetrinaFlash in parallelo e, man mano che gli ordini diretti crescono, decidono autonomamente di ridurre la dipendenza dalle piattaforme.",
   },
   {
-    q: "Sono a posto con GDPR e privacy?",
-    a: "Sì, VetrinaFlash è conforme al GDPR. I dati dei tuoi clienti sono tuoi: non vengono venduti né usati per pubblicità di terzi. Sei tu il titolare del dato, a differenza delle piattaforme di delivery.",
+    q: "Fate anche altro oltre ai menu QR per ristoranti?",
+    a: "Sì. Realizziamo e-commerce su misura, gestionali per ordini con accessi separati per dipendenti e amministratori, sistemi di preventivazione personalizzati e in generale soluzioni digitali su misura per qualsiasi attività. Sempre con la stessa formula: una tantum, zero canoni.",
+  },
+  {
+    q: "Sono al sicuro con i dati? GDPR e privacy?",
+    a: "VetrinaFlash è conforme al GDPR. I dati dei tuoi clienti sono tuoi — non vengono venduti, non vengono usati per pubblicità. A differenza delle piattaforme di delivery, con VetrinaFlash sei tu il titolare del dato.",
+  },
+  {
+    q: "C'è un supporto dedicato?",
+    a: `Sì. Il supporto è italiano, risponde in italiano, conosce le esigenze della ristorazione italiana. Ci puoi contattare direttamente su WhatsApp al ${PHONE_DISPLAY.replaceAll(" ", "")}. Nessun bot, nessun call center.`,
   },
 ];
 
 function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-5%" });
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.4, delay: (index % 6) * 0.05 }}
-      className={`border rounded-sm overflow-hidden transition-colors ${
-        open ? "border-ember/30 bg-ember/5" : "border-[var(--ink-line)] bg-ink-soft"
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.4, delay: (index % 5) * 0.06 }}
+      className={`border rounded-2xl overflow-hidden transition-all duration-300 ${
+        open
+          ? "border-[#7CFF00]/25 bg-[#7CFF00]/[0.03]"
+          : "border-white/8 bg-white/[0.02] hover:border-white/12"
       }`}
     >
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between gap-4 px-6 py-5 text-left"
       >
-        <span className="text-cream font-medium">{faq.q}</span>
+        <span className="text-white font-medium text-base">{faq.q}</span>
         <motion.div
           animate={{ rotate: open ? 180 : 0 }}
           transition={{ duration: 0.2 }}
-          className="shrink-0"
+          className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
+            open ? "bg-[#7CFF00]/20" : "bg-white/8"
+          }`}
         >
-          <ChevronDown size={18} className={open ? "text-ember" : "text-ash-dim"} />
+          <ChevronDown
+            className="w-4 h-4"
+            style={{ color: open ? "#7CFF00" : "rgba(255,255,255,0.5)" }}
+          />
         </motion.div>
       </button>
 
@@ -72,9 +86,12 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
           >
-            <p className="px-6 pb-5 text-ash text-sm leading-relaxed">{faq.a}</p>
+            <div className="px-6 pb-5">
+              <div className="w-full h-px bg-white/6 mb-4" />
+              <p className="text-white/60 text-sm leading-relaxed">{faq.a}</p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -82,62 +99,67 @@ function FAQItem({ faq, index }: { faq: (typeof faqs)[0]; index: number }) {
   );
 }
 
-function FAQJsonLd() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
-  };
-  return (
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-  );
-}
-
 export default function FAQSection() {
-  return (
-    <section id="faq" className="relative py-24 md:py-32 bg-ink-soft">
-      <FAQJsonLd />
-      <div className="max-w-3xl mx-auto px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-12"
-        >
-          <p className="font-mono text-xs tracking-widest text-gold uppercase mb-4">Domande frequenti</p>
-          <h2 className="font-display font-black uppercase text-[clamp(2rem,5vw,3.2rem)] leading-[0.98] text-cream">
-            Risposte dirette.
-          </h2>
-        </motion.div>
+  const headingRef = useRef<HTMLDivElement>(null);
+  const headingInView = useInView(headingRef, { once: true, margin: "-10%" });
 
+  return (
+    <section id="faq" className="relative py-24 md:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_100%,rgba(124,255,0,0.03),transparent)]" />
+
+      <div className="relative max-w-4xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <div ref={headingRef} className="text-center mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={headingInView ? { opacity: 1, y: 0 } : {}}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 text-[11px] font-semibold uppercase tracking-[0.2em] mb-6"
+          >
+            <MessageCircle size={13} />
+            Domande frequenti
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={headingInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.1 }}
+            className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
+          >
+            Risposte dirette.
+            <br />
+            <span className="neon-text">Nessun giro di parole.</span>
+          </motion.h2>
+        </div>
+
+        {/* FAQ list */}
         <div className="flex flex-col gap-3">
           {faqs.map((faq, i) => (
             <FAQItem key={faq.q} faq={faq} index={i} />
           ))}
         </div>
 
+        {/* Still have questions */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="mt-10 text-center"
+          className="mt-10 text-center p-7 rounded-3xl border border-white/8 bg-white/[0.02]"
         >
-          <p className="text-ash mb-4">Hai ancora dubbi? Parliamone direttamente.</p>
-          <a
-            href="https://wa.me/393505383769?text=Ciao!%20Ho%20una%20domanda%20su%20VetrinaFlash"
+          <p className="text-white/60 text-base mb-4">
+            Hai ancora dubbi? Parliamone direttamente.
+          </p>
+          <motion.a
+            href={WA_DEFAULT}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-sm border border-[var(--ink-line)] px-6 py-3 font-semibold text-cream hover:border-ember/40 transition-colors"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#25D366]/30 bg-[#25D366]/8 text-[#25D366] font-semibold text-sm hover:bg-[#25D366]/15 transition-all duration-200"
           >
-            <MessageCircle size={18} />
-            Scrivici su WhatsApp
-          </a>
+            <MessageCircle size={16} />
+            Scrivici su WhatsApp — {PHONE_DISPLAY}
+          </motion.a>
         </motion.div>
       </div>
     </section>

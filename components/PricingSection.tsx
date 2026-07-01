@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Check, ArrowRight, Clock } from "lucide-react";
-import { useLeadForm } from "./LeadFormProvider";
+import { Check, Star, MessageCircle } from "lucide-react";
+import { PHONE_DISPLAY, WA_QUOTE } from "@/lib/site";
 
 const included = [
   "Setup personalizzato sul tuo locale",
-  "Ordini illimitati per asporto e delivery",
+  "Menu digitale QR illimitato",
   "Integrazione pagamenti (Nexi, SumUp, Stripe…)",
   "Dashboard analytics inclusa",
   "Notifiche ordine in tempo reale",
@@ -14,119 +14,79 @@ const included = [
   "Aggiornamenti e modifiche inclusi",
 ];
 
-const addons = [
-  "Dominio e branding personalizzato",
-  "Integrazione con cassa/POS",
-  "Gestione multi-sede",
-  "Menu multilingua",
-  "QR da tavolo dedicato",
-  "Servizio fotografico prodotti",
-];
-
 export default function PricingSection() {
-  const { open } = useLeadForm();
   return (
-    <section id="preventivo" className="relative py-24 md:py-32">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+    <section id="pricing" className="relative py-24 md:py-32 overflow-hidden">
+      {/* Glow */}
+      <motion.div
+        animate={{ scale: [1, 1.12, 1], opacity: [0.35, 0.55, 0.35] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] h-[640px] rounded-full bg-[#7CFF00]/[0.05] blur-[120px] pointer-events-none"
+      />
+
+      <div className="relative max-w-3xl mx-auto px-4 sm:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-xl"
+          initial={{ opacity: 0, y: 44, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+          className="relative card-lux rounded-[2rem] p-8 sm:p-12 overflow-hidden"
+          style={{ boxShadow: "0 0 60px rgba(124,255,0,0.08)" }}
         >
-          <p className="font-mono text-xs tracking-widest text-gold uppercase mb-4">Investimento intelligente</p>
-          <h2 className="font-display font-black uppercase text-[clamp(2rem,5vw,3.2rem)] leading-[0.98] text-cream">
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#7CFF00]/60 to-transparent" />
+
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-green text-[#7CFF00] text-[11px] font-semibold uppercase tracking-[0.2em] mb-7">
+            <Star size={12} className="fill-current" />
+            Investimento intelligente
+          </div>
+
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5">
             Una tantum.
             <br />
-            Adattato a te.
+            <span className="gradient-text">Adattato a te.</span>
           </h2>
-          <p className="mt-5 text-ash text-lg">
+
+          <p className="text-white/50 text-lg leading-relaxed mb-9 max-w-xl">
             Nessun canone mensile che pesa sul bilancio ogni 30 giorni. Paghi
-            una volta, il sistema è tuo. Il prezzo finale dipende dal tuo
-            locale: te lo diciamo nel preventivo, senza sorprese.
+            una volta, il sistema è{" "}
+            <span className="text-white font-semibold">tuo</span>. Adattiamo
+            ogni soluzione alle esigenze specifiche del tuo locale.
           </p>
-        </motion.div>
 
-        <div className="mt-16 grid lg:grid-cols-[1.1fr_0.9fr] gap-8">
-          {/* Included */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="rounded-md border border-ember/30 bg-ink-soft p-8 sm:p-10"
-          >
-            <p className="font-mono text-xs tracking-widest text-ember uppercase mb-5">
-              Sempre incluso
-            </p>
-            <ul className="space-y-3.5">
-              {included.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-cream">
-                  <Check size={18} className="text-gold shrink-0 mt-0.5" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-
-          {/* Add-ons */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="rounded-md border border-dashed border-[var(--ink-line)] p-8 sm:p-10"
-          >
-            <p className="font-mono text-xs tracking-widest text-ash-dim uppercase mb-5">
-              Extra disponibili su richiesta
-            </p>
-            <div className="flex flex-wrap gap-2.5">
-              {addons.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-sm border border-[var(--ink-line)] px-3.5 py-2 text-sm text-ash"
-                >
-                  {item}
+          <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-3.5 mb-10">
+            {included.map((item, i) => (
+              <motion.li
+                key={item}
+                initial={{ opacity: 0, x: -16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.25 + i * 0.06 }}
+                className="flex items-start gap-3"
+              >
+                <span className="mt-0.5 w-5 h-5 rounded-full bg-[#7CFF00]/15 border border-[#7CFF00]/30 flex items-center justify-center flex-shrink-0">
+                  <Check size={11} className="text-[#7CFF00]" strokeWidth={3} />
                 </span>
-              ))}
-            </div>
-            <p className="text-ash-dim text-sm mt-6 leading-relaxed">
-              Parliamone nel preventivo: aggiungiamo solo quello che serve al
-              tuo locale.
-            </p>
-          </motion.div>
-        </div>
+                <span className="text-white/65 text-sm">{item}</span>
+              </motion.li>
+            ))}
+          </ul>
 
-        {/* Capacity note — honest, real constraint of a hands-on setup */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mt-10 inline-flex items-center gap-2.5 rounded-sm border border-gold/25 bg-gold/10 px-4 py-2.5 font-mono text-xs text-gold"
-        >
-          <Clock size={14} />
-          Setup curato a mano: accettiamo un numero limitato di nuovi locali ogni mese
-        </motion.div>
-
-        {/* CTA — price lives here, under the quote request */}
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="mt-6 flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10"
-        >
-          <button
-            onClick={() => open()}
-            className="group inline-flex items-center gap-2 rounded-sm bg-ember px-7 py-4 font-semibold text-ink hover:bg-gold transition-colors shrink-0"
+          <motion.a
+            href={WA_QUOTE}
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-center justify-center gap-2.5 w-full px-6 py-4 rounded-2xl bg-[#7CFF00] text-black font-bold text-base sm:text-lg"
+            style={{ boxShadow: "0 0 36px rgba(124,255,0,0.4)" }}
           >
-            Richiedi il tuo preventivo
-            <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-          </button>
-          <p className="font-mono text-xs text-ash-dim">
-            Risposta entro poche ore · Preventivo gratuito e senza impegno · 350 538 3769
+            <MessageCircle size={19} />
+            Richiedi il tuo preventivo su WhatsApp
+          </motion.a>
+
+          <p className="text-white/25 text-xs text-center mt-4">
+            Risposta entro poche ore · Preventivo gratuito e senza impegno ·{" "}
+            {PHONE_DISPLAY}
           </p>
         </motion.div>
       </div>
