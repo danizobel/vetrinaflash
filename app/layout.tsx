@@ -1,94 +1,46 @@
 import type { Metadata } from "next";
-import { Big_Shoulders, Space_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Syne } from "next/font/google";
 import "./globals.css";
 
-const bigShoulders = Big_Shoulders({
-  variable: "--font-shoulders",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["700", "800", "900"],
 });
 
-const spaceMono = Space_Mono({
-  variable: "--font-space-mono",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  weight: ["400", "700"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["600", "700", "800"],
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vetrinaflash.it"),
-  title: {
-    default: "VetrinaFlash — Ordini diretti per asporto e delivery. 0% commissioni.",
-    template: "%s · VetrinaFlash",
-  },
+  title: "VetrinaFlash — Menu QR e Ordini Diretti. 0% Commissioni.",
   description:
-    "Il sistema per ricevere ordini di asporto e delivery senza pagare commissioni alle piattaforme. Pagamenti integrati, investimento una tantum, attivo in poche ore.",
+    "Il sistema che fa sparire le commissioni di delivery. Menu digitale QR, ordini diretti, pagamenti Nexi/SumUp/Stripe sul tuo conto. Investimento una tantum, zero canoni mensili.",
   keywords:
-    "ordini asporto online, delivery senza commissioni, alternativa JustEat, alternativa Glovo, alternativa Deliveroo, sistema ordini ristorante, menu digitale QR, software ristorante italia",
-  alternates: {
-    canonical: "https://vetrinaflash.it",
-  },
+    "menu digitale ristorante, menu QR, ordini diretti ristorante, eliminare commissioni delivery, sistema ordinazione ristorante, vetrinaflash",
   openGraph: {
-    title: "VetrinaFlash — Ordini diretti per asporto e delivery. 0% commissioni.",
-    description: "Il tuo locale incassa il 100% di ogni ordine. Investimento una tantum, nessun canone.",
+    title: "VetrinaFlash — Ordini Diretti. 0% Commissioni. Per Sempre.",
+    description:
+      "Menu QR, ordini diretti e pagamenti sul tuo conto. Una tantum, zero canoni mensili.",
     url: "https://vetrinaflash.it",
     siteName: "VetrinaFlash",
     locale: "it_IT",
     type: "website",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "VetrinaFlash — 0% commissioni su asporto e delivery" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "VetrinaFlash",
-    description: "Ordini diretti per asporto e delivery. 0% commissioni, per sempre.",
-    images: ["/og-image.png"],
+    description:
+      "Ordini diretti per ristoranti e bar. 0% commissioni, investimento una tantum.",
   },
   robots: { index: true, follow: true },
 };
-
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": "https://vetrinaflash.it/#organization",
-      name: "VetrinaFlash",
-      url: "https://vetrinaflash.it",
-      logo: "https://vetrinaflash.it/images/logo-mascot.png",
-      areaServed: "IT",
-      contactPoint: {
-        "@type": "ContactPoint",
-        contactType: "customer service",
-        telephone: "+39-350-538-3769",
-        availableLanguage: "Italian",
-      },
-    },
-    {
-      "@type": "Service",
-      "@id": "https://vetrinaflash.it/#service",
-      name: "VetrinaFlash — Sistema ordini diretti per asporto e delivery",
-      description:
-        "Sistema che permette a ristoranti, pizzerie e bar di ricevere ordini diretti per asporto e delivery senza pagare commissioni alle piattaforme esterne. Pagamenti integrati, investimento una tantum.",
-      provider: { "@id": "https://vetrinaflash.it/#organization" },
-      areaServed: { "@type": "Country", name: "Italia" },
-      audience: {
-        "@type": "Audience",
-        audienceType: "Ristoranti, pizzerie, bar, gelaterie",
-      },
-      offers: {
-        "@type": "Offer",
-        priceCurrency: "EUR",
-        description: "Investimento una tantum, prezzo su preventivo personalizzato",
-      },
-    },
-  ],
-};
-
 
 export default function RootLayout({
   children,
@@ -96,12 +48,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="it" className={`${bigShoulders.variable} ${spaceMono.variable} ${inter.variable}`}>
-      <body className="bg-ink text-cream antialiased">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+    <html
+      lang="it"
+      className={`${geistSans.variable} ${geistMono.variable} ${syne.variable}`}
+    >
+      <body className="bg-[#050607] text-white overflow-x-hidden antialiased grain">
         {children}
       </body>
     </html>

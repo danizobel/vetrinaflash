@@ -1,113 +1,155 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import Image from "next/image";
-import { Menu, X } from "lucide-react";
-import { useLeadForm } from "./LeadFormProvider";
+import { Menu, X, MessageCircle } from "lucide-react";
+import { WA_DEFAULT } from "@/lib/site";
 
 const navLinks = [
-  { label: "Come funziona", href: "#come-funziona" },
-  { label: "Funzionalità", href: "#funzionalita" },
+  { label: "Il Problema", href: "#problema" },
+  { label: "Come Funziona", href: "#come-funziona" },
+  { label: "Demo", href: "#demo" },
+  { label: "Confronto", href: "#confronto" },
   { label: "Clienti", href: "#clienti" },
-  { label: "Preventivo", href: "#preventivo" },
   { label: "FAQ", href: "#faq" },
 ];
 
 export default function Navbar() {
-  const { open } = useLeadForm();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 24);
+    const handleScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-ink/90 backdrop-blur-md border-b border-[var(--ink-line)]"
-          : "bg-transparent"
-      }`}
-    >
-      <nav className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between h-16 md:h-[72px]">
-        <a href="#" className="flex items-center gap-2.5 shrink-0">
-          <Image
-            src="/images/logo-mascot.png"
-            alt="VetrinaFlash"
-            width={36}
-            height={36}
-            className="rounded-md"
-          />
-          <span className="font-display font-extrabold text-xl tracking-tight text-cream">
-            Vetrina<span className="text-ember">Flash</span>
-          </span>
-        </a>
+    <>
+      <motion.header
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-[#050607]/85 backdrop-blur-2xl border-b border-white/5"
+            : "bg-transparent"
+        }`}
+      >
+        {/* Scroll progress */}
+        <motion.div
+          style={{ scaleX: progress }}
+          className="absolute bottom-0 left-0 right-0 h-[2px] origin-left bg-gradient-to-r from-[#7CFF00] via-[#b7ff5c] to-[#7CFF00]"
+        />
 
-        <div className="hidden lg:flex items-center gap-8">
-          {navLinks.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="text-sm font-mono text-ash hover:text-cream transition-colors"
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 md:h-[72px]">
+            {/* Logo */}
+            <motion.a
+              href="#"
+              className="flex items-center gap-2.5 group"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              {l.label}
-            </a>
-          ))}
+              <div className="relative w-8 h-8 md:w-9 md:h-9">
+                <div className="absolute inset-0 rounded-full bg-[#7CFF00]/25 blur-md group-hover:bg-[#7CFF00]/45 transition-all duration-300" />
+                <Image
+                  src="/logo.png"
+                  alt="VetrinaFlash"
+                  width={36}
+                  height={36}
+                  className="relative z-10 rounded-full object-contain"
+                />
+              </div>
+              <span className="font-display font-bold text-lg tracking-tight">
+                <span className="text-white">Vetrina</span>
+                <span className="text-[#7CFF00]">Flash</span>
+              </span>
+            </motion.a>
+
+            {/* Desktop nav */}
+            <nav className="hidden lg:flex items-center gap-0.5">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 + i * 0.05 }}
+                  className="relative px-3.5 py-2 text-[13px] text-white/55 hover:text-white transition-colors duration-200 rounded-lg hover:bg-white/5"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </nav>
+
+            {/* CTA */}
+            <motion.a
+              href={WA_DEFAULT}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#7CFF00] text-black text-sm font-bold"
+              style={{ boxShadow: "0 0 24px rgba(124,255,0,0.35)" }}
+            >
+              <MessageCircle size={15} />
+              Parla con noi
+            </motion.a>
+
+            {/* Mobile toggle */}
+            <button
+              className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-white/10 text-white/60 hover:text-white hover:border-white/20 transition-colors"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Menu"
+            >
+              {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+            </button>
+          </div>
         </div>
+      </motion.header>
 
-        <button
-          onClick={() => open()}
-          className="hidden lg:inline-flex items-center rounded-sm bg-ember px-4 py-2 text-sm font-semibold text-ink hover:bg-gold transition-colors"
-        >
-          Richiedi preventivo
-        </button>
-
-        <button
-          aria-label={mobileOpen ? "Chiudi il menu" : "Apri il menu"}
-          className="lg:hidden p-2 text-cream"
-          onClick={() => setMobileOpen((v) => !v)}
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </nav>
-
+      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="lg:hidden overflow-hidden bg-ink border-b border-[var(--ink-line)]"
+            className="fixed inset-x-0 top-16 z-40 bg-[#050607]/95 backdrop-blur-2xl border-b border-white/5 py-4 px-4 lg:hidden"
           >
-            <div className="flex flex-col gap-1 px-5 py-4">
-              {navLinks.map((l) => (
+            <div className="flex flex-col gap-1 mb-4">
+              {navLinks.map((link) => (
                 <a
-                  key={l.href}
-                  href={l.href}
+                  key={link.href}
+                  href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="py-2.5 text-sm font-mono text-ash hover:text-cream"
+                  className="px-4 py-3 text-sm text-white/60 hover:text-white hover:bg-white/5 rounded-xl transition-all"
                 >
-                  {l.label}
+                  {link.label}
                 </a>
               ))}
-              <button
-                onClick={() => {
-                  setMobileOpen(false);
-                  open();
-                }}
-                className="mt-2 inline-flex items-center justify-center rounded-sm bg-ember px-4 py-2.5 text-sm font-semibold text-ink"
-              >
-                Richiedi preventivo
-              </button>
             </div>
+            <a
+              href={WA_DEFAULT}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-[#7CFF00] text-black text-sm font-bold"
+            >
+              <MessageCircle size={15} />
+              Scrivici su WhatsApp
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }

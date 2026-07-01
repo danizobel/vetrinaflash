@@ -1,154 +1,203 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Check, X } from "lucide-react";
-import SavingsCalculator from "./SavingsCalculator";
+import { useEffect, useRef } from "react";
+import {
+  motion,
+  useInView,
+  useMotionValue,
+  useTransform,
+  animate,
+} from "framer-motion";
+import { TrendingDown, ArrowRight } from "lucide-react";
 
-const compareRows = [
-  { label: "Commissione per ordine", platforms: "30–35%", justeat: "~30%", glovo: "~35%", deliveroo: "~32%", vf: "0%" },
-  { label: "Costo mensile (15 ordini/g)", platforms: "€337–394", justeat: "~€337", glovo: "~€394", deliveroo: "~€360", vf: "Una tantum" },
-  { label: "Dati del cliente tuoi", platforms: false, justeat: false, glovo: false, deliveroo: false, vf: true },
-  { label: "Pagamenti diretti integrati", platforms: false, justeat: false, glovo: false, deliveroo: false, vf: true },
-  { label: "Nessun canone mensile", platforms: false, justeat: false, glovo: false, deliveroo: false, vf: true },
+const platforms = [
+  {
+    name: "Glovo",
+    percent: 35,
+    order: 30,
+    keep: "19,50",
+    lost: "10,50",
+    delay: 0,
+  },
+  {
+    name: "JustEat",
+    percent: 30,
+    order: 30,
+    keep: "21,00",
+    lost: "9,00",
+    delay: 0.12,
+  },
+  {
+    name: "Deliveroo",
+    percent: 32,
+    order: 30,
+    keep: "20,40",
+    lost: "9,60",
+    delay: 0.24,
+  },
 ];
 
-function Cell({ value }: { value: string | boolean }) {
-  if (typeof value === "boolean") {
-    return value ? (
-      <Check size={16} className="text-gold mx-auto" />
-    ) : (
-      <X size={16} className="text-ash-dim mx-auto" />
-    );
-  }
-  return <span>{value}</span>;
+function CountUp({
+  to,
+  suffix = "",
+  prefix = "",
+  duration = 1.4,
+  className,
+}: {
+  to: number;
+  suffix?: string;
+  prefix?: string;
+  duration?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-15%" });
+  const count = useMotionValue(0);
+  const text = useTransform(
+    count,
+    (v) => `${prefix}${Math.round(v).toLocaleString("it-IT")}${suffix}`
+  );
+
+  useEffect(() => {
+    if (inView) {
+      const controls = animate(count, to, { duration, ease: [0.22, 1, 0.36, 1] });
+      return controls.stop;
+    }
+  }, [inView, to, count, duration]);
+
+  return (
+    <motion.span ref={ref} className={className}>
+      {text}
+    </motion.span>
+  );
 }
 
 export default function ProblemSection() {
+  const headRef = useRef<HTMLDivElement>(null);
+  const headInView = useInView(headRef, { once: true, margin: "-10%" });
+
   return (
-    <section id="problema" className="relative py-24 md:py-32">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.5 }}
-          className="max-w-2xl"
-        >
-          <p className="font-mono text-xs tracking-widest text-rust uppercase mb-4">
+    <section id="problema" className="relative py-24 md:py-32 overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_50%_0%,rgba(255,61,61,0.05),transparent)]" />
+
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6">
+        {/* Header */}
+        <div ref={headRef} className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={headInView ? { opacity: 1, y: 0 } : {}}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-red-500/25 bg-red-500/5 text-red-400 text-[11px] font-semibold uppercase tracking-[0.2em] mb-6"
+          >
+            <TrendingDown size={12} />
             Il problema vero
-          </p>
-          <h2 className="font-display font-black uppercase text-[clamp(2rem,5vw,3.2rem)] leading-[0.98] text-cream">
-            Stesso ordine.
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={headInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.1 }}
+            className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
+          >
+            Quanto stai pagando
             <br />
-            Incasso diverso.
-          </h2>
-          <p className="mt-5 text-ash text-lg">
-            Per ogni ordine che arriva da una piattaforma esterna, cedi fino a
-            un terzo dell&apos;incasso. Non è una commissione: è un affitto
-            che non finisce mai.
-          </p>
-        </motion.div>
-
-        {/* Receipt comparison */}
-        <div className="mt-16 grid sm:grid-cols-2 gap-10 max-w-2xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20, rotate: -1.5 }}
-            whileInView={{ opacity: 1, y: 0, rotate: -1.5 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="ticket px-6 pt-6 pb-9 font-mono text-[13px]"
+            <span className="text-red-400" style={{ textShadow: "0 0 40px rgba(255,61,61,0.4)" }}>
+              le piattaforme ogni mese?
+            </span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={headInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.2 }}
+            className="text-white/50 text-lg max-w-2xl mx-auto"
           >
-            <p className="font-bold tracking-widest text-[11px] mb-3">PIATTAFORMA DELIVERY</p>
-            <div className="ticket-line py-1.5 flex justify-between">
-              <span>Ordine</span><span>€30,00</span>
-            </div>
-            <div className="ticket-line py-1.5 flex justify-between text-rust">
-              <span>Commissione (35%)</span><span>-€10,50</span>
-            </div>
-            <div className="mt-3 pt-3 border-t-2 border-dashed border-[#2a2118]/30 flex justify-between font-bold text-base">
-              <span>Incassi tu</span><span>€19,50</span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20, rotate: 1.5 }}
-            whileInView={{ opacity: 1, y: 0, rotate: 1.5 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="ticket px-6 pt-6 pb-9 font-mono text-[13px]"
-          >
-            <p className="font-bold tracking-widest text-[11px] mb-3">VETRINAFLASH</p>
-            <div className="ticket-line py-1.5 flex justify-between">
-              <span>Ordine</span><span>€30,00</span>
-            </div>
-            <div className="ticket-line py-1.5 flex justify-between text-[#5c5040]">
-              <span>Commissione</span><span>€0,00</span>
-            </div>
-            <div className="mt-3 pt-3 border-t-2 border-dashed border-[#2a2118]/30 flex justify-between font-bold text-base text-ember">
-              <span>Incassi tu</span><span>€30,00</span>
-            </div>
-          </motion.div>
+            Per ogni ordine da una piattaforma esterna cedi fino a un terzo
+            dell&apos;incasso. Non è una commissione —{" "}
+            <span className="text-white font-medium">
+              è un affitto che non finisce mai.
+            </span>
+          </motion.p>
         </div>
 
-        {/* Interactive savings calculator */}
-        <SavingsCalculator />
-
-        {/* Comparison: stacked cards on mobile, full table on desktop */}
-        <motion.div
-          id="confronto"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mt-16"
-        >
-          {/* Mobile: simplified stacked comparison */}
-          <div className="sm:hidden flex flex-col gap-3">
-            {compareRows.map((row) => (
-              <div
-                key={row.label}
-                className="rounded-sm border border-[var(--ink-line)] bg-ink-soft px-4 py-4"
-              >
-                <p className="text-cream text-sm mb-3">{row.label}</p>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-sm bg-ink px-3 py-2.5">
-                    <p className="font-mono text-[10px] text-ash-dim uppercase mb-1">Piattaforme</p>
-                    <div className="text-ash text-sm"><Cell value={row.platforms} /></div>
-                  </div>
-                  <div className="rounded-sm bg-ember/10 border border-ember/20 px-3 py-2.5">
-                    <p className="font-mono text-[10px] text-gold uppercase mb-1">VetrinaFlash</p>
-                    <div className="text-gold font-semibold text-sm"><Cell value={row.vf} /></div>
-                  </div>
+        {/* Commission cards */}
+        <div className="grid sm:grid-cols-3 gap-5 mb-14">
+          {platforms.map((p) => (
+            <motion.div
+              key={p.name}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10%" }}
+              transition={{ delay: p.delay, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -6 }}
+              className="relative p-7 rounded-3xl border border-red-500/15 bg-gradient-to-b from-red-500/[0.06] to-transparent overflow-hidden group"
+            >
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
+              <div className="text-white/45 text-sm font-semibold uppercase tracking-widest mb-4">
+                {p.name}
+              </div>
+              <div className="font-display text-6xl sm:text-7xl font-extrabold text-red-400 mb-1 tabular-nums" style={{ textShadow: "0 0 44px rgba(255,61,61,0.35)" }}>
+                <CountUp to={p.percent} suffix="%" duration={1.2 + p.delay} />
+              </div>
+              <div className="text-white/30 text-xs uppercase tracking-widest mb-6">
+                di commissione per ordine
+              </div>
+              <div className="p-3.5 rounded-xl bg-black/30 border border-white/5 text-sm leading-relaxed">
+                <div className="flex justify-between text-white/45">
+                  <span>Ordine da</span>
+                  <span className="text-white font-semibold">€{p.order},00</span>
+                </div>
+                <div className="flex justify-between text-white/45">
+                  <span>Tu incassi</span>
+                  <span className="text-white/70 font-semibold">€{p.keep}</span>
+                </div>
+                <div className="flex justify-between pt-1.5 mt-1.5 border-t border-white/8">
+                  <span className="text-red-400/80">Regali a {p.name}</span>
+                  <span className="text-red-400 font-bold">−€{p.lost}</span>
                 </div>
               </div>
-            ))}
-          </div>
+            </motion.div>
+          ))}
+        </div>
 
-          {/* Desktop: full detailed table */}
-          <div className="hidden sm:block overflow-x-auto">
-            <table className="w-full min-w-[560px] text-sm border-collapse">
-              <thead>
-                <tr className="font-mono text-xs uppercase tracking-wide text-ash-dim border-b border-[var(--ink-line)]">
-                  <th className="text-left py-3 pr-4 font-normal">Caratteristica</th>
-                  <th className="py-3 px-3 font-normal">JustEat</th>
-                  <th className="py-3 px-3 font-normal">Glovo</th>
-                  <th className="py-3 px-3 font-normal">Deliveroo</th>
-                  <th className="py-3 px-3 font-normal text-gold">VetrinaFlash</th>
-                </tr>
-              </thead>
-              <tbody>
-                {compareRows.map((row) => (
-                  <tr key={row.label} className="border-b border-[var(--ink-line)] text-center">
-                    <td className="text-left py-3.5 pr-4 text-cream">{row.label}</td>
-                    <td className="py-3.5 px-3 text-ash"><Cell value={row.justeat} /></td>
-                    <td className="py-3.5 px-3 text-ash"><Cell value={row.glovo} /></td>
-                    <td className="py-3.5 px-3 text-ash"><Cell value={row.deliveroo} /></td>
-                    <td className="py-3.5 px-3 text-gold font-semibold"><Cell value={row.vf} /></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        {/* Arrow strip */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-14"
+        >
+          <span className="text-white/40 text-base line-through decoration-red-400/60">
+            Fino al 35% di commissione
+          </span>
+          <motion.span
+            animate={{ x: [0, 6, 0] }}
+            transition={{ duration: 1.6, repeat: Infinity }}
+            className="text-[#7CFF00]"
+          >
+            <ArrowRight size={22} />
+          </motion.span>
+          <span className="font-display text-xl sm:text-2xl font-bold neon-text">
+            Con VetrinaFlash: 0%. Mai.
+          </span>
+        </motion.div>
+
+        {/* Annual savings counter */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.7 }}
+          className="card-lux rounded-3xl p-8 sm:p-12 text-center"
+        >
+          <p className="text-white/50 text-sm sm:text-base mb-4">
+            Con 15 ordini al giorno da €25 medi, con VetrinaFlash risparmieresti{" "}
+            <span className="text-white font-semibold">ogni anno</span>:
+          </p>
+          <div className="font-display text-6xl sm:text-8xl font-extrabold neon-text tabular-nums mb-3">
+            <CountUp to={41063} prefix="€" duration={2.2} />
           </div>
+          <p className="text-white/25 text-xs">
+            calcolato su commissione media del 30% · stima su volumi medi di un locale tipo
+          </p>
         </motion.div>
       </div>
     </section>

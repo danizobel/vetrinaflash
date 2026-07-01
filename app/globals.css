@@ -1,125 +1,166 @@
 @import "tailwindcss";
 
 :root {
-  /* ---- VetrinaFlash design tokens ---- */
-  --ink: #15110d;          /* base background — warm charcoal, not cold black */
-  --ink-soft: #1c1611;     /* raised panels */
-  --ink-line: rgba(246, 239, 225, 0.09);
-
-  --paper: #f6efe1;        /* ticket / receipt paper */
-  --paper-dim: #e9dfc9;
-
-  --ember: #ff6a2c;        /* primary accent — wood-oven flame */
-  --ember-dim: rgba(255, 106, 44, 0.16);
-  --gold: #f2b33d;         /* secondary accent — what you keep */
-  --gold-dim: rgba(242, 179, 61, 0.14);
-  --rust: #b9402b;         /* cost / commission lost */
-  --rust-dim: rgba(185, 64, 43, 0.16);
-
-  --cream: #f3ecdf;        /* headings on dark */
-  --ash: #b3a896;          /* muted body on dark */
-  --ash-dim: #756a59;      /* faint labels / dividers */
+  --background: #050607;
+  --foreground: #f4f6f0;
+  --neon: #7cff00;
+  --neon-soft: #b7ff5c;
+  --danger: #ff4d4d;
 }
 
 @theme inline {
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-paper: var(--paper);
-  --color-paper-dim: var(--paper-dim);
-  --color-ember: var(--ember);
-  --color-gold: var(--gold);
-  --color-rust: var(--rust);
-  --color-cream: var(--cream);
-  --color-ash: var(--ash);
-  --color-ash-dim: var(--ash-dim);
-  --font-display: var(--font-shoulders);
-  --font-mono: var(--font-space-mono);
-  --font-body: var(--font-inter);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-neon: var(--neon);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-syne);
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-  background: var(--ink);
-  color: var(--cream);
-  font-family: var(--font-body), system-ui, -apple-system, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
+.font-display {
+  font-family: var(--font-syne), var(--font-geist-sans), sans-serif;
 }
 
-:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
+/* ── Scrollbar / selection ─────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #050607; }
+::-webkit-scrollbar-thumb { background: rgba(124, 255, 0, 0.5); border-radius: 3px; }
+::selection { background: rgba(124, 255, 0, 0.28); color: #fff; }
+
+/* ── Text treatments ───────────────────────────────── */
+.neon-text {
+  color: var(--neon);
+  text-shadow: 0 0 24px rgba(124, 255, 0, 0.55), 0 0 64px rgba(124, 255, 0, 0.25);
 }
 
-::selection { background: var(--ember-dim); color: var(--cream); }
+.gradient-text {
+  background: linear-gradient(120deg, #d6ff8f 0%, #7cff00 45%, #4ade80 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--ink); }
-::-webkit-scrollbar-thumb { background: var(--ash-dim); border-radius: 3px; }
+/* ── Surfaces ──────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
 
-/* ---------- Receipt / ticket signature ---------- */
-.ticket {
-  background: var(--paper);
-  color: #2a2118;
+.glass-green {
+  background: rgba(124, 255, 0, 0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(124, 255, 0, 0.22);
+}
+
+/* Gradient border card (fake border via padding + mask) */
+.card-lux {
   position: relative;
-  clip-path: polygon(
-    0% 0%, 100% 0%, 100% 96%,
-    95.8% 100%, 91.6% 96%, 87.5% 100%, 83.3% 96%, 79.1% 100%, 75% 96%,
-    70.8% 100%, 66.6% 96%, 62.5% 100%, 58.3% 96%, 54.1% 100%, 50% 96%,
-    45.8% 100%, 41.6% 96%, 37.5% 100%, 33.3% 96%, 29.1% 100%, 25% 96%,
-    20.8% 100%, 16.6% 96%, 12.5% 100%, 8.3% 96%, 4.1% 100%, 0% 96%
-  );
-  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.55);
+  background:
+    linear-gradient(rgba(12, 14, 12, 0.92), rgba(9, 10, 9, 0.96)) padding-box,
+    linear-gradient(150deg, rgba(124, 255, 0, 0.35), rgba(255, 255, 255, 0.07) 40%, rgba(124, 255, 0, 0.06)) border-box;
+  border: 1px solid transparent;
 }
 
-.ticket-line {
-  border-bottom: 1px dashed rgba(42, 33, 24, 0.25);
+/* Section grid background */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(124, 255, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(124, 255, 0, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 75%);
 }
 
-.perf-row {
-  height: 10px;
-  background-image: radial-gradient(circle, var(--ink) 3px, transparent 3.5px);
-  background-size: 16px 10px;
-  background-repeat: repeat-x;
-  background-position: center;
-}
-
-.grain::before {
+/* Film grain overlay */
+.grain::after {
   content: "";
   position: fixed;
   inset: 0;
+  z-index: 90;
   pointer-events: none;
-  opacity: 0.05;
-  z-index: 1;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
 }
 
-.dot-grid {
-  background-image: radial-gradient(var(--ink-line) 1px, transparent 1px);
-  background-size: 22px 22px;
+/* ── Range slider ──────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 9999px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #7cff00;
+  cursor: pointer;
+  box-shadow: 0 0 14px rgba(124, 255, 0, 0.65), 0 0 30px rgba(124, 255, 0, 0.25);
+  border: 3px solid #050607;
+  transition: box-shadow 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 20px rgba(124, 255, 0, 0.9), 0 0 44px rgba(124, 255, 0, 0.35);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #7cff00;
+  cursor: pointer;
+  border: 3px solid #050607;
+  box-shadow: 0 0 14px rgba(124, 255, 0, 0.65);
 }
 
-@keyframes blink-led {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.25; }
+/* ── Keyframe utilities ────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
-.led { animation: blink-led 1.6s ease-in-out infinite; }
+.animate-marquee {
+  animation: marquee 36s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
 
-@keyframes drift {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.9); opacity: 0; }
 }
-.drift { animation: drift 6s ease-in-out infinite; }
+.pulse-ring::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px solid rgba(124, 255, 0, 0.7);
+  animation: pulse-ring 2.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee { animation: none; }
+  .pulse-ring::before { animation: none; }
+}

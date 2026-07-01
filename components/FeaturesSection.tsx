@@ -1,86 +1,157 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ShoppingBag, CreditCard, BarChart3, Bell, Store, RefreshCw, QrCode } from "lucide-react";
+import { useRef, MouseEvent } from "react";
+import { motion, useMotionValue, useMotionTemplate } from "framer-motion";
+import {
+  ShoppingCart,
+  CreditCard,
+  BarChart3,
+  Bell,
+  QrCode,
+  Store,
+} from "lucide-react";
 
 const features = [
   {
-    icon: ShoppingBag,
-    title: "Ordini diretti, asporto e delivery",
-    text: "Il cliente ordina online, l'ordine arriva a te e i soldi arrivano a te. Fine della storia.",
+    icon: ShoppingCart,
+    title: "Ordini Online Diretti",
+    description:
+      "I clienti ordinano dal tuo QR code. L'ordine arriva a te, i soldi arrivano a te. Fine della storia.",
+    tag: "Zero intermediari",
   },
   {
     icon: CreditCard,
     title: "Pagamenti Nexi, SumUp, Stripe",
-    text: "Carta, bancomat, Apple Pay, Google Pay. Tutto integrato, zero frizioni per il cliente.",
+    description:
+      "Tutte le modalità integrate. Carta, bancomat, Apple Pay, Google Pay. Zero frizioni per il cliente.",
+    tag: "Sul tuo conto",
   },
   {
     icon: BarChart3,
-    title: "Dashboard analytics mensili",
-    text: "Incassi, ordini, piatti più venduti, fasce orarie. Sai cosa funziona e cosa no.",
+    title: "Dashboard Analytics",
+    description:
+      "Grafici chiari su incassi, ordini, piatti più venduti, fasce orarie. Sai cosa funziona e cosa no.",
+    tag: "Dati tuoi",
   },
   {
     icon: Bell,
-    title: "Notifiche push istantanee",
-    text: "Ogni ordine arriva con una notifica in tempo reale su tablet, telefono o PC.",
-  },
-  {
-    icon: Store,
-    title: "Back office completo",
-    text: "Gestisci orari, categorie, varianti, allergeni, promozioni. Pensato per la ristorazione italiana.",
-  },
-  {
-    icon: RefreshCw,
-    title: "Menu sempre aggiornabile",
-    text: "Cambia un prezzo, aggiungi il piatto del giorno, disattiva un esaurito. In 30 secondi.",
+    title: "Notifiche Push Istantanee",
+    description:
+      "Ogni ordine arriva con una notifica in tempo reale su tablet, telefono o PC. Nessun ordine perso, mai.",
+    tag: "Tempo reale",
   },
   {
     icon: QrCode,
-    title: "QR da tavolo (opzionale)",
-    text: "Se vuoi anche l'ordine in sala, attiviamo un QR code dedicato al tavolo, in più rispetto all'asporto e al delivery.",
-    optional: true,
+    title: "Menu QR Sempre Aggiornabile",
+    description:
+      "Cambia un prezzo, aggiungi il piatto del giorno, disattiva un prodotto esaurito. In 30 secondi da qualsiasi dispositivo.",
+    tag: "No-code",
+  },
+  {
+    icon: Store,
+    title: "Back Office Completo",
+    description:
+      "Gestisci orari, categorie, varianti, allergeni, promozioni. Pensato per la ristorazione italiana, non per Silicon Valley.",
+    tag: "Tutto incluso",
   },
 ];
 
-export default function FeaturesSection() {
-  return (
-    <section id="funzionalita" className="relative py-24 md:py-32">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-xl"
-        >
-          <p className="font-mono text-xs tracking-widest text-gold uppercase mb-4">Tutto incluso</p>
-          <h2 className="font-display font-black uppercase text-[clamp(2rem,5vw,3.2rem)] leading-[0.98] text-cream">
-            Un sistema. Tutto quello che serve.
-          </h2>
-          <p className="mt-5 text-ash text-lg">
-            Dalla gestione del menu agli analytics avanzati, tutto in un
-            unico pannello pensato per chi lavora in cucina.
-          </p>
-        </motion.div>
+function SpotlightCard({
+  feature,
+  index,
+}: {
+  feature: (typeof features)[0];
+  index: number;
+}) {
+  const mx = useMotionValue(-300);
+  const my = useMotionValue(-300);
+  const spotlight = useMotionTemplate`radial-gradient(240px circle at ${mx}px ${my}px, rgba(124,255,0,0.09), transparent 75%)`;
 
-        <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((f, i) => (
-            <motion.div
-              key={f.title}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: (i % 3) * 0.08 }}
-              className={`rounded-md border px-6 py-7 transition-colors ${
-                f.optional
-                  ? "border-dashed border-[var(--ink-line)] bg-transparent"
-                  : "border-[var(--ink-line)] bg-ink-soft hover:border-ember/40"
-              }`}
-            >
-              <f.icon size={22} className={f.optional ? "text-ash-dim" : "text-ember"} />
-              <h3 className="font-display font-bold text-lg text-cream mt-4">{f.title}</h3>
-              <p className="text-ash text-sm mt-2 leading-relaxed">{f.text}</p>
-            </motion.div>
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mx.set(e.clientX - rect.left);
+    my.set(e.clientY - rect.top);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-8%" }}
+      transition={{ delay: (index % 3) * 0.09, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -5 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => {
+        mx.set(-300);
+        my.set(-300);
+      }}
+      className="group relative p-7 rounded-3xl glass hover:border-[#7CFF00]/25 transition-colors duration-300"
+    >
+      <motion.div
+        style={{ background: spotlight }}
+        className="absolute inset-0 rounded-3xl pointer-events-none"
+      />
+      <div className="relative">
+        <div className="flex items-start justify-between mb-5">
+          <div className="w-12 h-12 rounded-2xl bg-[#7CFF00]/10 flex items-center justify-center group-hover:bg-[#7CFF00]/20 group-hover:scale-110 transition-all duration-300">
+            <feature.icon size={20} className="text-[#7CFF00]" />
+          </div>
+          <span className="text-[10px] font-bold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full bg-white/5 text-white/35">
+            {feature.tag}
+          </span>
+        </div>
+        <h3 className="font-display text-white font-bold text-lg mb-2.5 leading-tight">
+          {feature.title}
+        </h3>
+        <p className="text-white/45 text-sm leading-relaxed">
+          {feature.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
+export default function FeaturesSection() {
+  const ref = useRef<HTMLDivElement>(null);
+
+  return (
+    <section id="features" className="relative py-24 md:py-32">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_100%,rgba(124,255,0,0.04),transparent)]" />
+      <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-green text-[#7CFF00] text-[11px] font-semibold uppercase tracking-[0.2em] mb-6"
+          >
+            Tutto incluso
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
+          >
+            Un sistema.{" "}
+            <span className="gradient-text">Tutto quello che serve.</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-white/50 text-lg max-w-2xl mx-auto"
+          >
+            Dalla gestione del menu agli analytics avanzati, tutto in un unico
+            pannello pensato per chi lavora in cucina.
+          </motion.p>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {features.map((feature, i) => (
+            <SpotlightCard key={feature.title} feature={feature} index={i} />
           ))}
         </div>
       </div>
