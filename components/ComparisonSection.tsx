@@ -61,7 +61,7 @@ export default function ComparisonSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
+            className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
           >
             Metti i numeri in fila.
             <br />
@@ -90,7 +90,7 @@ export default function ComparisonSection() {
             <table className="w-full text-sm min-w-[620px]">
               <thead>
                 <tr className="border-b border-white/8">
-                  <th className="text-left px-6 py-5 text-white/35 text-xs uppercase tracking-[0.15em] font-semibold">
+                  <th className="text-left px-4 sm:px-6 py-5 text-white/35 text-xs uppercase tracking-[0.15em] font-semibold sticky left-0 z-10 bg-[#0a0c08] sm:static sm:bg-transparent max-w-[170px] sm:max-w-none">
                     Caratteristica
                   </th>
                   {["JustEat", "Glovo", "Deliveroo"].map((n) => (
@@ -119,7 +119,7 @@ export default function ComparisonSection() {
                     transition={{ delay: i * 0.05, duration: 0.45 }}
                     className="border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors"
                   >
-                    <td className="px-6 py-4 text-white/70 font-medium">
+                    <td className="px-4 sm:px-6 py-4 text-white/70 font-medium sticky left-0 z-10 bg-[#0a0c08] sm:static sm:bg-transparent max-w-[170px] sm:max-w-none">
                       {row.label}
                     </td>
                     <td className="px-4 py-4 text-center">
@@ -147,6 +147,10 @@ export default function ComparisonSection() {
             </table>
           </div>
         </motion.div>
+
+        <p className="sm:hidden text-center text-white/30 text-xs mt-4">
+          Scorri la tabella verso sinistra per vedere VetrinaFlash →
+        </p>
       </div>
     </section>
   );

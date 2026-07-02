@@ -93,7 +93,7 @@ export default function ROICalculator() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4"
+            className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4"
           >
             Quanti soldi stai{" "}
             <span className="text-red-400" style={{ textShadow: "0 0 36px rgba(255,61,61,0.4)" }}>

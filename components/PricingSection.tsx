@@ -40,7 +40,7 @@ export default function PricingSection() {
             Investimento intelligente
           </div>
 
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5">
+          <h2 className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5">
             Una tantum.
             <br />
             <span className="gradient-text">Adattato a te.</span>
