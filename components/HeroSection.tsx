@@ -42,7 +42,7 @@ function BurnCounter() {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.1 }}
-      className="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl border border-red-500/25 bg-red-500/5"
+      className="inline-flex items-center max-w-full gap-3 px-4 sm:px-5 py-2.5 rounded-2xl border border-red-500/25 bg-red-500/5"
     >
       <span className="relative flex h-2 w-2">
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-60" />
@@ -62,7 +62,7 @@ function BurnCounter() {
 /* Headline con reveal parola per parola */
 function StaggeredTitle() {
   return (
-    <h1 className="font-display text-[2.6rem] sm:text-6xl md:text-7xl font-extrabold leading-[1.02] tracking-tight mb-7">
+    <h1 className="font-display text-[clamp(1.9rem,8.6vw,2.6rem)] sm:text-6xl md:text-7xl font-extrabold leading-[1.06] sm:leading-[1.02] tracking-tight mb-7">
       {[
         { text: "Il sistema che fa", cls: "text-white" },
         { text: "sparire le commissioni", cls: "gradient-text" },
@@ -134,15 +134,15 @@ export default function HeroSection() {
 
       <motion.div
         style={{ y, opacity }}
-        className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center"
+        className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 text-center"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-green text-[#7CFF00] text-[11px] font-semibold tracking-[0.2em] uppercase mb-8"
+          className="inline-flex flex-wrap items-center justify-center max-w-full gap-2 px-4 py-2 rounded-full glass-green text-[#7CFF00] text-[10px] sm:text-[11px] font-semibold tracking-[0.12em] sm:tracking-[0.2em] uppercase mb-8 text-center"
         >
-          <Zap size={11} className="fill-current" />
+          <Zap size={11} className="fill-current shrink-0" />
           Menu QR · Ordini Diretti · Pagamenti Tuoi
         </motion.div>
 
@@ -157,7 +157,7 @@ export default function HeroSection() {
           Menu digitale QR, ordini diretti e pagamenti con{" "}
           <span className="text-white font-semibold">Nexi, SumUp e Stripe</span>{" "}
           — direttamente sul tuo conto.
-          <br className="hidden sm:block" />
+          <br className="hidden sm:block" />{" "}
           Investimento una tantum. Zero canoni. Zero commissioni.{" "}
           <span className="text-[#7CFF00] font-semibold">Per sempre.</span>
         </motion.p>

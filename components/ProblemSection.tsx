@@ -95,7 +95,7 @@ export default function ProblemSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={headInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1 }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
+            className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
           >
             Quanto stai pagando
             <br />
@@ -192,7 +192,7 @@ export default function ProblemSection() {
             Con 15 ordini al giorno da €25 medi, con VetrinaFlash risparmieresti{" "}
             <span className="text-white font-semibold">ogni anno</span>:
           </p>
-          <div className="font-display text-6xl sm:text-8xl font-extrabold neon-text tabular-nums mb-3">
+          <div className="font-display text-5xl sm:text-8xl font-extrabold neon-text tabular-nums mb-3">
             <CountUp to={41063} prefix="€" duration={2.2} />
           </div>
           <p className="text-white/25 text-xs">

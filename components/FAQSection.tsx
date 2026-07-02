@@ -123,7 +123,7 @@ export default function FAQSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={headingInView ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.1 }}
-            className="font-display text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
+            className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5"
           >
             Risposte dirette.
             <br />

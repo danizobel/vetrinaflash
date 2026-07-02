@@ -34,7 +34,7 @@ export default function FinalCTASection() {
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.1, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          className="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] mb-7"
+          className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.05] mb-7"
         >
           Il tuo concorrente
           <br />
