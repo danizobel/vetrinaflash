@@ -13,22 +13,34 @@ import FAQSection from "@/components/FAQSection";
 import FinalCTASection from "@/components/FinalCTASection";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import SectionDivider from "@/components/SectionDivider";
 
 export default function Home() {
   return (
     <main className="relative bg-[#050607] min-h-screen">
       <Navbar />
       <HeroSection />
+      <SectionDivider />
       <ProblemSection />
+      <SectionDivider />
       <HowItWorksSection />
+      <SectionDivider />
       <ChatDemoSection />
+      <SectionDivider />
       <FeaturesSection />
+      <SectionDivider />
       <ComparisonSection />
+      <SectionDivider />
       <ROICalculator />
+      <SectionDivider />
       <ClientsSection />
+      <SectionDivider />
       <CustomSolutionsSection />
+      <SectionDivider />
       <PricingSection />
+      <SectionDivider />
       <FAQSection />
+      <SectionDivider />
       <FinalCTASection />
       <Footer />
       <WhatsAppFloat />

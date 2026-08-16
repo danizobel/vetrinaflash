@@ -24,6 +24,10 @@ export const metadata: Metadata = {
     "Il sistema che fa sparire le commissioni di delivery. Menu digitale QR, ordini diretti, pagamenti Nexi/SumUp/Stripe sul tuo conto. Investimento una tantum, zero canoni mensili.",
   keywords:
     "menu digitale ristorante, menu QR, ordini diretti ristorante, eliminare commissioni delivery, sistema ordinazione ristorante, vetrinaflash",
+  icons: {
+    icon: "/images/logo-mascot.png",
+    apple: "/images/logo-mascot.png",
+  },
   openGraph: {
     title: "VetrinaFlash — Ordini Diretti. 0% Commissioni. Per Sempre.",
     description:
@@ -32,12 +36,14 @@ export const metadata: Metadata = {
     siteName: "VetrinaFlash",
     locale: "it_IT",
     type: "website",
+    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "VetrinaFlash",
     description:
       "Ordini diretti per ristoranti e bar. 0% commissioni, investimento una tantum.",
+    images: ["/og-image.png"],
   },
   robots: { index: true, follow: true },
 };

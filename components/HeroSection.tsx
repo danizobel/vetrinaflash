@@ -12,6 +12,8 @@ import {
 import Image from "next/image";
 import { MessageCircle, Play, Zap } from "lucide-react";
 import { WA_DEMO } from "@/lib/site";
+import ParticleField from "@/components/ParticleField";
+import MagneticButton from "@/components/MagneticButton";
 
 const stats = [
   { value: "0%", label: "Commissioni, sempre" },
@@ -25,8 +27,6 @@ const clients = [
   { src: "/clients/peterbun.png", name: "Peter Bun", tag: "Paninoteca Dolce · Campania" },
 ];
 
-/* Contatore live: € di commissioni bruciate mentre l'utente legge.
-   Un locale medio (15 ordini/g × €25 × 30%) perde ~€112/giorno → ~€0.078/s */
 function BurnCounter() {
   const [burned, setBurned] = useState(0);
   useEffect(() => {
@@ -59,7 +59,6 @@ function BurnCounter() {
   );
 }
 
-/* Headline con reveal parola per parola */
 function StaggeredTitle() {
   return (
     <h1 className="font-display text-[clamp(1.9rem,8.6vw,2.6rem)] sm:text-6xl md:text-7xl font-extrabold leading-[1.06] sm:leading-[1.02] tracking-tight mb-7">
@@ -96,7 +95,6 @@ export default function HeroSection() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
 
-  // Glow che segue il mouse
   const mx = useMotionValue(0.5);
   const my = useMotionValue(0.4);
   const sx = useSpring(mx, { stiffness: 50, damping: 20 });
@@ -117,20 +115,46 @@ export default function HeroSection() {
       }}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-28 pb-10"
     >
-      {/* Background layers */}
       <div className="absolute inset-0">
+        <ParticleField />
         <div className="absolute inset-0 bg-grid" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_-15%,rgba(124,255,0,0.14),transparent)]" />
+        
+        {/* Existing neon green glow */}
         <motion.div
           style={{ left: glowX, top: glowY }}
-          className="absolute w-[560px] h-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7CFF00]/[0.055] blur-[120px] pointer-events-none"
+          className="absolute w-[560px] h-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#7CFF00]/[0.055] blur-[120px] pointer-events-none z-0"
         />
+        
+        {/* Second teal/emerald animated blob */}
+        <motion.div
+          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-500/10 blur-[140px] pointer-events-none z-0"
+        />
+
+        {/* Existing green pulse blob */}
         <motion.div
           animate={{ scale: [1.1, 1, 1.1], opacity: [0.15, 0.3, 0.15] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-          className="absolute bottom-1/4 right-1/5 w-[380px] h-[380px] rounded-full bg-[#4ade80]/5 blur-[100px] pointer-events-none"
+          className="absolute bottom-1/4 right-1/5 w-[380px] h-[380px] rounded-full bg-[#4ade80]/5 blur-[100px] pointer-events-none z-0"
         />
       </div>
+
+      {/* Floating Mascotte Logo */}
+      <motion.div
+        animate={{ y: [-12, 12, -12], rotate: [-3, 3, -3] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-24 right-[10%] hidden md:block opacity-80 pointer-events-none z-10"
+      >
+        <Image 
+          src="/images/logo-mascot.png" 
+          alt="Mascot Logo" 
+          width={120} 
+          height={120} 
+          className="animate-float" 
+        />
+      </motion.div>
 
       <motion.div
         style={{ y, opacity }}
@@ -168,26 +192,28 @@ export default function HeroSection() {
           transition={{ delay: 0.9 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
         >
-          <a
-            href={WA_DEMO}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative px-8 py-4 rounded-full bg-[#7CFF00] text-black font-bold text-base overflow-hidden hover:scale-105 transition-transform duration-200"
-            style={{ boxShadow: "0 0 36px rgba(124,255,0,0.45), 0 0 80px rgba(124,255,0,0.15)" }}
-          >
-            <motion.span
-              animate={{ x: ["-150%", "250%"] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "linear", repeatDelay: 1.2 }}
-              className="absolute inset-0 w-1/3 bg-white/25 skew-x-[-20deg] blur-sm pointer-events-none"
-            />
-            <span className="relative flex items-center gap-2">
-              <MessageCircle size={17} />
-              Richiedi una demo gratuita
-            </span>
-          </a>
+          <MagneticButton>
+            <a
+              href={WA_DEMO}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative px-8 py-4 rounded-full bg-[#7CFF00] text-black font-bold text-base overflow-hidden hover:scale-105 transition-transform duration-200 block w-full sm:w-auto"
+              style={{ boxShadow: "0 0 36px rgba(124,255,0,0.45), 0 0 80px rgba(124,255,0,0.15)" }}
+            >
+              <motion.span
+                animate={{ x: ["-150%", "250%"] }}
+                transition={{ duration: 2.4, repeat: Infinity, ease: "linear", repeatDelay: 1.2 }}
+                className="absolute inset-0 w-1/3 bg-white/25 skew-x-[-20deg] blur-sm pointer-events-none"
+              />
+              <span className="relative flex items-center justify-center gap-2">
+                <MessageCircle size={17} />
+                Richiedi una demo gratuita
+              </span>
+            </a>
+          </MagneticButton>
           <a
             href="#demo"
-            className="group flex items-center gap-2.5 px-8 py-4 rounded-full border border-white/15 text-white/65 hover:text-white hover:border-[#7CFF00]/40 font-medium text-base transition-all duration-200"
+            className="group flex items-center justify-center gap-2.5 px-8 py-4 rounded-full border border-white/15 text-white/65 hover:text-white hover:border-[#7CFF00]/40 font-medium text-base transition-all duration-200"
           >
             <span className="w-7 h-7 rounded-full bg-white/8 group-hover:bg-[#7CFF00]/15 flex items-center justify-center transition-colors">
               <Play size={11} className="fill-current ml-0.5" />
@@ -202,22 +228,25 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.25 }}
-          className="flex flex-wrap items-center justify-center gap-10 sm:gap-20 mt-12"
+          className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-12"
         >
           {stats.map((s, i) => (
-            <div key={i} className="text-center">
+            <motion.div 
+              key={i}
+              whileHover={{ y: -5, boxShadow: "0 0 24px rgba(124,255,0,0.15)" }}
+              className="text-center bg-white/[0.03] border border-white/[0.08] backdrop-blur-md rounded-2xl px-6 py-5 transition-all duration-300 flex-1 min-w-[140px] max-w-[200px]"
+            >
               <div className="font-display text-3xl sm:text-4xl font-extrabold neon-text">
                 {s.value}
               </div>
-              <div className="text-[11px] text-white/35 uppercase tracking-[0.18em] mt-1.5">
+              <div className="text-[10px] sm:text-[11px] text-white/40 uppercase tracking-[0.18em] mt-2">
                 {s.label}
               </div>
-            </div>
+            </motion.div>
           ))}
         </motion.div>
       </motion.div>
 
-      {/* Clienti reali — trust strip */}
       <motion.div
         ref={clientsRef}
         initial={{ opacity: 0, y: 30 }}
@@ -238,13 +267,13 @@ export default function HeroSection() {
               whileHover={{ scale: 1.06, y: -3 }}
               className="flex items-center gap-3 group"
             >
-              <div className="w-11 h-11 rounded-xl overflow-hidden bg-white/90 border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-300">
+              <div className="w-11 h-11 rounded-xl overflow-hidden bg-white/90 border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-300 animated-border">
                 <Image
                   src={c.src}
                   alt={c.name}
                   width={44}
                   height={44}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain relative z-10"
                 />
               </div>
               <div className="text-left">
@@ -260,14 +289,15 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Scroll hint */}
       <motion.div
         animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 1.8, repeat: Infinity }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 w-5 h-8 rounded-full border border-white/15 flex items-start justify-center pt-1.5"
+        transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 w-5 h-8 rounded-full border border-white/25 flex items-start justify-center pt-1.5 z-10"
       >
-        <div className="w-1 h-2 rounded-full bg-[#7CFF00]/60" />
+        <div className="w-1 h-2 rounded-full bg-[#7CFF00] shadow-[0_0_8px_rgba(124,255,0,0.8)]" />
       </motion.div>
+
+      <div className="section-divider absolute bottom-0 left-0 right-0 h-px z-20" />
     </section>
   );
 }
