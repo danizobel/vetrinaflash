@@ -6,9 +6,9 @@ import Image from "next/image";
 import { MapPin, BadgeCheck } from "lucide-react";
 
 const clients = [
-  { name: "'N Farinati", type: "Modern Pizza & More", city: "Caserta", logo: "/clients/nfarinati.jpg", logoBg: "#2B4A2E", quote: "Da quando usiamo VetrinaFlash i clienti ordinano direttamente dal QR al tavolo. Zero commissioni a ogni pizza, e il menu si aggiorna in pochi secondi. Non torneremo mai pi\u00f9 alle piattaforme.", highlight: "Zero commissioni a ogni pizza" },
-  { name: "TORB", type: "Birreria Carnivora", city: "Caserta", logo: "/clients/torb.png", logoBg: "#ffffff", quote: "Per una birreria carnivora come la nostra, avere il menu sempre aggiornato \u00e8 fondamentale. Setup velocissimo, pannello intuitivo. I clienti adorano scansionare il QR direttamente al tavolo.", highlight: "La birra arriva, le commissioni no" },
-  { name: "Peter Bun", type: "La 1\u00aa Paninoteca Dolce d'Italia", city: "Campania", logo: "/clients/peterbun.png", logoBg: "#ffffff", quote: "Essere la prima paninoteca dolce d'Italia significa essere innovativi. VetrinaFlash ci ha permesso di portare l'esperienza digitale anche all'ordinazione. I clienti rimangono stupiti.", highlight: "Dolce come i loro panini" },
+  { name: "'N Farinati", type: "Modern Pizza & More", city: "Caserta", logo: "/clients/nfarinati.jpg", logoBg: "#2B4A2E", quote: "Da quando usiamo VetrinaFlash i clienti ordinano direttamente dal QR al tavolo. Zero commissioni a ogni pizza, e il menu si aggiorna in pochi secondi. Non torneremo mai più alle piattaforme.", highlight: "Zero commissioni a ogni pizza" },
+  { name: "TORB", type: "Birreria Carnivora", city: "Caserta", logo: "/clients/torb.png", logoBg: "#ffffff", quote: "Per una birreria carnivora come la nostra, avere il menu sempre aggiornato è fondamentale. Setup velocissimo, pannello intuitivo. I clienti adorano scansionare il QR direttamente al tavolo.", highlight: "La birra arriva, le commissioni no" },
+  { name: "Peter Bun", type: "La 1ª Paninoteca Dolce d'Italia", city: "Campania", logo: "/clients/peterbun.png", logoBg: "#ffffff", quote: "Essere la prima paninoteca dolce d'Italia significa essere innovativi. VetrinaFlash ci ha permesso di portare l'esperienza digitale anche all'ordinazione. I clienti rimangono stupiti.", highlight: "Dolce come i loro panini" },
 ];
 
 function ClientCard({ c, index }: { c: any; index: number }) {

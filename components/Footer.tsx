@@ -16,7 +16,7 @@ const companyLinks = [
   { label: "Prezzi", href: "#pricing" },
   { label: "FAQ", href: "#faq" },
 ];
-const badges = ["\ud83d\udd12 SSL", "\u2705 GDPR", "\ud83c\uddee\ud83c\uddf9 Made in Italy", "\ud83d\udc8e Una Tantum"];
+const badges = ["🔒 SSL", "✅ GDPR", "🇮🇹 Made in Italy", "💎 Una Tantum"];
 
 export default function Footer() {
   return (
@@ -41,8 +41,8 @@ export default function Footer() {
           <div><h4 className="text-white font-semibold text-sm mb-4">Contatti</h4><ul className="space-y-2.5 text-sm"><li><a href={WA_DEFAULT} target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-[#25D366] transition-colors link-underline">WhatsApp: {PHONE_DISPLAY}</a></li><li><a href={`mailto:${EMAIL}`} className="text-white/40 hover:text-[#7CFF00] transition-colors link-underline">{EMAIL}</a></li><li className="text-white/25 cursor-pointer hover:text-white/40 transition-colors">Privacy Policy</li><li className="text-white/25 cursor-pointer hover:text-white/40 transition-colors">Termini di Servizio</li><li className="text-white/25 cursor-pointer hover:text-white/40 transition-colors">Cookie Policy</li></ul></div>
         </motion.div>
         <div className="border-t border-white/5 pt-7 flex flex-col sm:flex-row items-center justify-between gap-3 relative before:absolute before:inset-0 before:bg-[linear-gradient(110deg,transparent,rgba(255,255,255,0.02),transparent)] before:bg-[length:200%_100%] before:animate-shimmer pointer-events-none">
-          <p className="text-white/30 text-xs z-10 pointer-events-auto">\u00a9 {new Date().getFullYear()} VetrinaFlash \u2014 Tutti i diritti riservati</p>
-          <p className="text-white/30 text-xs z-10 pointer-events-auto">Sistema ordini diretti \u00b7 0% commissioni \u00b7 Investimento una tantum</p>
+          <p className="text-white/30 text-xs z-10 pointer-events-auto">© {new Date().getFullYear()} VetrinaFlash — Tutti i diritti riservati</p>
+          <p className="text-white/30 text-xs z-10 pointer-events-auto">Sistema ordini diretti · 0% commissioni · Investimento una tantum</p>
         </div>
       </div>
     </footer>

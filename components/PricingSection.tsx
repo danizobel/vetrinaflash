@@ -7,7 +7,7 @@ import { PHONE_DISPLAY, WA_QUOTE } from "@/lib/site";
 const included = [
   "Setup personalizzato sul tuo locale",
   "Menu digitale QR illimitato",
-  "Integrazione pagamenti (Nexi, SumUp, Stripe\u2026)",
+  "Integrazione pagamenti (Nexi, SumUp, Stripe…)",
   "Dashboard analytics inclusa",
   "Notifiche ordine in tempo reale",
   "Supporto in italiano dedicato",
@@ -49,7 +49,7 @@ export default function PricingSection() {
             <span className="gradient-text">Adattato a te.</span>
           </h2>
           
-          <p className="text-white/50 text-lg leading-relaxed mb-9 max-w-xl">Nessun canone mensile che pesa sul bilancio ogni 30 giorni. Paghi una volta, il sistema \u00e8 <span className="text-white font-semibold">tuo</span>. Adattiamo ogni soluzione alle esigenze specifiche del tuo locale.</p>
+          <p className="text-white/50 text-lg leading-relaxed mb-9 max-w-xl">Nessun canone mensile che pesa sul bilancio ogni 30 giorni. Paghi una volta, il sistema è <span className="text-white font-semibold">tuo</span>. Adattiamo ogni soluzione alle esigenze specifiche del tuo locale.</p>
           
           <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-3.5 mb-10">
             {included.map((item, i) => (
@@ -81,7 +81,7 @@ export default function PricingSection() {
             <span className="relative z-10">Richiedi il tuo preventivo su WhatsApp</span>
           </motion.a>
           
-          <p className="text-white/25 text-xs text-center mt-4">Risposta entro poche ore \u00b7 Preventivo gratuito e senza impegno \u00b7 {PHONE_DISPLAY}</p>
+          <p className="text-white/25 text-xs text-center mt-4">Risposta entro poche ore · Preventivo gratuito e senza impegno · {PHONE_DISPLAY}</p>
         </motion.div>
       </div>
     </section>

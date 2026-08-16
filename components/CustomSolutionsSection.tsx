@@ -8,9 +8,9 @@ import MagneticButton from "@/components/MagneticButton";
 
 const solutions = [
   { icon: ShoppingBag, title: "E-commerce su misura", description: "Negozio online completo con catalogo, carrello, pagamenti integrati e gestione spedizioni. Progettato sul tuo brand, non un template uguale a mille altri.", points: ["Catalogo e varianti prodotto", "Pagamenti Stripe / Nexi / PayPal", "Gestione ordini e spedizioni"] },
-  { icon: Users, title: "Gestionali ordini multi-utente", description: "Sistemi di gestione ordini con accessi separati per dipendenti e amministratori. Ognuno vede solo quello che gli serve, tu hai il controllo totale.", points: ["Ruoli dipendente e admin", "Permessi e storico attivit\u00e0", "Dashboard di controllo completa"] },
-  { icon: FileText, title: "Sistemi di preventivazione", description: "Preventivi personalizzati generati in automatico: il cliente configura ci\u00f2 che vuole, il sistema calcola e ti invia la richiesta gi\u00e0 strutturata.", points: ["Configuratore personalizzato", "Calcolo automatico dei prezzi", "Richieste ordinate, zero caos"] },
-  { icon: Wrench, title: "Soluzioni su misura", description: "Hai un processo particolare da digitalizzare? Lo analizziamo insieme e costruiamo lo strumento esatto che ti serve. Niente di pi\u00f9, niente di meno.", points: ["Analisi del tuo flusso di lavoro", "Sviluppo dedicato", "Tuo per sempre, una tantum"] },
+  { icon: Users, title: "Gestionali ordini multi-utente", description: "Sistemi di gestione ordini con accessi separati per dipendenti e amministratori. Ognuno vede solo quello che gli serve, tu hai il controllo totale.", points: ["Ruoli dipendente e admin", "Permessi e storico attività", "Dashboard di controllo completa"] },
+  { icon: FileText, title: "Sistemi di preventivazione", description: "Preventivi personalizzati generati in automatico: il cliente configura ciò che vuole, il sistema calcola e ti invia la richiesta già strutturata.", points: ["Configuratore personalizzato", "Calcolo automatico dei prezzi", "Richieste ordinate, zero caos"] },
+  { icon: Wrench, title: "Soluzioni su misura", description: "Hai un processo particolare da digitalizzare? Lo analizziamo insieme e costruiamo lo strumento esatto che ti serve. Niente di più, niente di meno.", points: ["Analisi del tuo flusso di lavoro", "Sviluppo dedicato", "Tuo per sempre, una tantum"] },
 ];
 
 function SolutionCard({ s, index }: { s: any; index: number }) {
@@ -86,7 +86,7 @@ export default function CustomSolutionsSection() {
         <div className="text-center mb-16">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-green text-[#7CFF00] text-[11px] font-semibold uppercase tracking-[0.2em] mb-6"><Sparkles size={12} />Oltre la ristorazione</motion.div>
           <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5">Non solo menu QR.<br /><span className="gradient-text">Costruiamo quello che ti serve.</span></motion.h2>
-          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-white/50 text-lg max-w-2xl mx-auto">La stessa filosofia — una tantum, zero canoni, tuo per sempre — applicata a qualsiasi strumento digitale per la tua attivit\u00e0.</motion.p>
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-white/50 text-lg max-w-2xl mx-auto">La stessa filosofia — una tantum, zero canoni, tuo per sempre — applicata a qualsiasi strumento digitale per la tua attività.</motion.p>
         </div>
         <div className="grid sm:grid-cols-2 gap-5 mb-12 perspective-[1000px]">
           {solutions.map((s, i) => (
@@ -95,7 +95,7 @@ export default function CustomSolutionsSection() {
         </div>
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-center flex justify-center">
           <MagneticButton>
-            <a href={waHref("Ciao! Avrei bisogno di una soluzione su misura per la mia attivit\u00e0. Possiamo parlarne?")} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full border border-[#7CFF00]/30 bg-[#7CFF00]/5 text-[#7CFF00] font-bold hover:bg-[#7CFF00]/12 transition-all duration-200">
+            <a href={waHref("Ciao! Avrei bisogno di una soluzione su misura per la mia attività. Possiamo parlarne?")} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-full border border-[#7CFF00]/30 bg-[#7CFF00]/5 text-[#7CFF00] font-bold hover:bg-[#7CFF00]/12 transition-all duration-200">
               Raccontaci il tuo progetto<ArrowRight size={17} className="group-hover:translate-x-1 transition-transform" />
             </a>
           </MagneticButton>
