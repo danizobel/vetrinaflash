@@ -23,7 +23,7 @@ function ClientCard({ c, index }: { c: any; index: number }) {
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || window.matchMedia("(hover: none)").matches) return;
     const rect = cardRef.current.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -40,8 +40,6 @@ function ClientCard({ c, index }: { c: any; index: number }) {
     y.set(0);
   };
 
-  const quoteWords = c.quote.split(" ");
-
   return (
     <motion.div
       ref={cardRef}
@@ -52,45 +50,33 @@ function ClientCard({ c, index }: { c: any; index: number }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className="group animated-border card-lux rounded-3xl p-8 flex flex-col text-center transition-shadow duration-300 hover:shadow-[0_0_48px_rgba(124,255,0,0.15),0_0_24px_rgba(124,255,0,0.1)] relative"
+      className="group animated-border card-lux rounded-3xl p-6 sm:p-8 flex flex-col text-center transition-shadow duration-300 hover:shadow-[0_0_48px_rgba(124,255,0,0.15),0_0_24px_rgba(124,255,0,0.1)] relative"
     >
       <div style={{ transform: "translateZ(30px)" }}>
         <motion.div
           whileHover={{ scale: 1.05, rotate: 1.5 }}
-          className="relative w-32 h-32 rounded-2xl mx-auto mb-7 overflow-hidden border border-white/10"
+          className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl mx-auto mb-6 sm:mb-7 overflow-hidden border border-white/10"
           style={{ background: c.logoBg }}
         >
           <Image src={c.logo} alt={c.name} width={128} height={128} className="w-full h-full object-contain p-2" />
         </motion.div>
       </div>
       <div style={{ transform: "translateZ(20px)" }}>
-        <h3 className="font-display text-white font-bold text-xl mb-1">{c.name}</h3>
+        <h3 className="font-display text-white font-bold text-lg sm:text-xl mb-1">{c.name}</h3>
       </div>
       <div style={{ transform: "translateZ(15px)" }}>
-        <div className="text-[#7CFF00] text-[11px] font-semibold uppercase tracking-[0.15em] mb-2">{c.type}</div>
+        <div className="text-[#7CFF00] text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.15em] mb-1.5 sm:mb-2">{c.type}</div>
       </div>
       <div style={{ transform: "translateZ(10px)" }}>
-        <div className="inline-flex items-center justify-center gap-1.5 text-white/35 text-xs mb-6"><MapPin size={11} />{c.city}</div>
+        <div className="inline-flex items-center justify-center gap-1.5 text-white/35 text-xs mb-5 sm:mb-6"><MapPin size={11} />{c.city}</div>
       </div>
-      <div style={{ transform: "translateZ(25px)" }} className="flex-1 mb-6 text-left border-l-2 border-[#7CFF00]/40 pl-4">
-        <p className="text-white/55 text-sm leading-relaxed italic">
-          &ldquo;
-          {quoteWords.map((word: string, i: number) => (
-            <motion.span
-              key={i}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 + index * 0.1 + i * 0.05, duration: 0.2 }}
-            >
-              {word}{" "}
-            </motion.span>
-          ))}
-          &rdquo;
+      <div style={{ transform: "translateZ(25px)" }} className="flex-1 mb-5 sm:mb-6 text-left border-l-2 border-[#7CFF00]/40 pl-3.5 sm:pl-4">
+        <p className="text-white/55 text-xs sm:text-sm leading-relaxed italic">
+          &ldquo;{c.quote}&rdquo;
         </p>
       </div>
       <div style={{ transform: "translateZ(30px)" }}>
-        <div className="shimmer inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#7CFF00]/8 border border-[#7CFF00]/20 text-[#7CFF00] text-xs font-bold relative overflow-hidden">{c.highlight}</div>
+        <div className="shimmer inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#7CFF00]/8 border border-[#7CFF00]/20 text-[#7CFF00] text-[11px] sm:text-xs font-bold relative overflow-hidden">{c.highlight}</div>
       </div>
     </motion.div>
   );

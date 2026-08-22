@@ -42,13 +42,13 @@ function BurnCounter() {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.1 }}
-      className="inline-flex items-center max-w-full gap-3 px-4 sm:px-5 py-2.5 rounded-2xl border border-red-500/25 bg-red-500/5"
+      className="inline-flex items-center justify-center max-w-full gap-2 sm:gap-3 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-2xl border border-red-500/25 bg-red-500/5 text-center"
     >
-      <span className="relative flex h-2 w-2">
+      <span className="relative flex h-2 w-2 shrink-0">
         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-60" />
         <span className="relative inline-flex rounded-full h-2 w-2 bg-red-400" />
       </span>
-      <span className="text-white/45 text-xs sm:text-sm">
+      <span className="text-white/45 text-[11px] sm:text-sm leading-snug">
         Da quando hai aperto questa pagina, un locale medio ha regalato{" "}
         <span className="text-red-400 font-bold font-mono tabular-nums">
           €{burned.toFixed(2)}
@@ -61,7 +61,7 @@ function BurnCounter() {
 
 function StaggeredTitle() {
   return (
-    <h1 className="font-display text-[clamp(1.9rem,8.6vw,2.6rem)] sm:text-6xl md:text-7xl font-extrabold leading-[1.06] sm:leading-[1.02] tracking-tight mb-7">
+    <h1 className="font-display text-[clamp(1.85rem,8.4vw,2.6rem)] sm:text-6xl md:text-7xl font-extrabold leading-[1.08] sm:leading-[1.02] tracking-tight mb-6 sm:mb-7">
       {[
         { text: "Il sistema che fa", cls: "text-white" },
         { text: "sparire le commissioni", cls: "gradient-text" },
@@ -176,7 +176,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.75 }}
-          className="text-lg sm:text-xl text-white/50 max-w-2xl mx-auto mb-9 leading-relaxed"
+          className="text-base sm:text-xl text-white/50 max-w-2xl mx-auto mb-8 sm:mb-9 leading-relaxed px-1"
         >
           Menu digitale QR, ordini diretti e pagamenti con{" "}
           <span className="text-white font-semibold">Nexi, SumUp e Stripe</span>{" "}
@@ -190,14 +190,14 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-7 sm:mb-8 w-full max-w-md sm:max-w-none mx-auto"
         >
-          <MagneticButton>
+          <MagneticButton className="w-full sm:w-auto">
             <a
               href={WA_DEMO}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative px-8 py-4 rounded-full bg-[#7CFF00] text-black font-bold text-base overflow-hidden hover:scale-105 transition-transform duration-200 block w-full sm:w-auto"
+              className="group relative px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#7CFF00] text-black font-bold text-sm sm:text-base overflow-hidden hover:scale-105 transition-transform duration-200 flex items-center justify-center w-full sm:w-auto"
               style={{ boxShadow: "0 0 36px rgba(124,255,0,0.45), 0 0 80px rgba(124,255,0,0.15)" }}
             >
               <motion.span
@@ -213,10 +213,10 @@ export default function HeroSection() {
           </MagneticButton>
           <a
             href="#demo"
-            className="group flex items-center justify-center gap-2.5 px-8 py-4 rounded-full border border-white/15 text-white/65 hover:text-white hover:border-[#7CFF00]/40 font-medium text-base transition-all duration-200"
+            className="group flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full border border-white/15 text-white/65 hover:text-white hover:border-[#7CFF00]/40 font-medium text-sm sm:text-base transition-all duration-200 w-full sm:w-auto"
           >
-            <span className="w-7 h-7 rounded-full bg-white/8 group-hover:bg-[#7CFF00]/15 flex items-center justify-center transition-colors">
-              <Play size={11} className="fill-current ml-0.5" />
+            <span className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/8 group-hover:bg-[#7CFF00]/15 flex items-center justify-center transition-colors">
+              <Play size={10} className="fill-current ml-0.5" />
             </span>
             Guarda come funziona
           </a>
@@ -228,18 +228,18 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.25 }}
-          className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-12"
+          className="grid grid-cols-3 gap-2.5 sm:gap-6 max-w-xl mx-auto mt-10 sm:mt-12 w-full"
         >
           {stats.map((s, i) => (
             <motion.div 
               key={i}
               whileHover={{ y: -5, boxShadow: "0 0 24px rgba(124,255,0,0.15)" }}
-              className="text-center bg-white/[0.03] border border-white/[0.08] backdrop-blur-md rounded-2xl px-6 py-5 transition-all duration-300 flex-1 min-w-[140px] max-w-[200px]"
+              className="text-center bg-white/[0.03] border border-white/[0.08] backdrop-blur-md rounded-2xl px-2.5 py-4 sm:px-6 sm:py-5 transition-all duration-300"
             >
-              <div className="font-display text-3xl sm:text-4xl font-extrabold neon-text">
+              <div className="font-display text-2xl sm:text-4xl font-extrabold neon-text">
                 {s.value}
               </div>
-              <div className="text-[10px] sm:text-[11px] text-white/40 uppercase tracking-[0.18em] mt-2">
+              <div className="text-[9px] sm:text-[11px] text-white/40 uppercase tracking-[0.12em] sm:tracking-[0.18em] mt-1.5 sm:mt-2 leading-tight">
                 {s.label}
               </div>
             </motion.div>

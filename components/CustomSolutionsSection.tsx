@@ -25,7 +25,7 @@ function SolutionCard({ s, index }: { s: any; index: number }) {
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-3deg", "3deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
+    if (!cardRef.current || window.matchMedia("(hover: none)").matches) return;
     const rect = cardRef.current.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
@@ -52,7 +52,7 @@ function SolutionCard({ s, index }: { s: any; index: number }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-      className="group animated-border card-lux rounded-3xl p-8 transition-colors duration-300 relative"
+      className="group animated-border card-lux rounded-3xl p-6 sm:p-8 transition-colors duration-300 relative"
     >
       <div style={{ transform: "translateZ(20px)" }} className="icon-glow w-12 h-12 rounded-2xl bg-[#7CFF00]/10 flex items-center justify-center mb-5 group-hover:bg-[#7CFF00]/20 group-hover:scale-110 transition-all duration-300 relative">
         <s.icon size={21} className="text-[#7CFF00] relative z-10" />

@@ -51,7 +51,9 @@ export default function Navbar() {
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
   useEffect(() => {
-    const handleScroll = () => {
+    let ticking = false;
+
+    const updateScrollState = () => {
       setScrolled(window.scrollY > 30);
       
       // Active link detection
@@ -62,7 +64,6 @@ export default function Navbar() {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          // Adjust threshold based on typical header height and reading position
           if (rect.top <= 150 && rect.bottom >= 150) {
             current = section;
             break;
@@ -75,10 +76,18 @@ export default function Navbar() {
       } else if (window.scrollY < 100) {
         setActiveSection("");
       }
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollState);
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Check on initial load
+    updateScrollState(); // Check on initial load
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -220,7 +229,7 @@ export default function Navbar() {
             initial="initial"
             animate="animate"
             exit="exit"
-            className="fixed inset-x-0 top-16 z-40 bg-[#050607]/95 backdrop-blur-3xl border-b border-white/5 py-4 px-4 lg:hidden min-h-[calc(100vh-4rem)] flex flex-col"
+            className="fixed inset-x-0 top-16 z-40 bg-[#050607]/95 backdrop-blur-3xl border-b border-white/5 py-4 px-4 lg:hidden h-[calc(100dvh-4rem)] max-h-[calc(100dvh-4rem)] overflow-y-auto flex flex-col justify-between"
           >
             <div className="flex flex-col gap-1 mb-6 flex-1">
               {navLinks.map((link) => {

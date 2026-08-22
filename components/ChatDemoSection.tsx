@@ -80,28 +80,36 @@ export default function ChatDemoSection() {
   const { scrollYProgress } = useScroll();
   const phoneY = useTransform(scrollYProgress, [0, 1], [0, -40]);
 
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    setIsDesktop(window.innerWidth >= 1024);
+    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <section id="demo" className="relative py-24 md:py-32 overflow-hidden aurora">
+    <section id="demo" className="relative py-20 sm:py-24 md:py-32 overflow-hidden aurora">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_50%,rgba(124,255,0,0.045),transparent)]" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 sm:mb-16">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-green text-[#7CFF00] text-[11px] font-semibold uppercase tracking-[0.2em] mb-6"><QrCode size={12} />Demo interattiva live</motion.div>
-          <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5">Provalo <span className="neon-text">adesso</span>.</motion.h2>
-          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-white/50 text-lg max-w-2xl mx-auto">A sinistra: quello che vede il tuo cliente dopo aver scansionato il QR. A destra: il tuo back office che si aggiorna <span className="text-white font-medium">in tempo reale</span>. Tocca un piatto.</motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 sm:mb-5">Provalo <span className="neon-text">adesso</span>.</motion.h2>
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-white/50 text-base sm:text-lg max-w-2xl mx-auto px-2">A sinistra: quello che vede il tuo cliente dopo aver scansionato il QR. A destra: il tuo back office che si aggiorna <span className="text-white font-medium">in tempo reale</span>. Tocca un piatto.</motion.p>
         </div>
-        <div className="grid lg:grid-cols-2 gap-10 items-start">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
           {/* Phone mockup */}
           <motion.div 
             initial={{ opacity: 0, x: -40 }} 
             whileInView={{ opacity: 1, x: 0 }} 
             viewport={{ once: true }} 
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} 
-            style={{ y: phoneY }}
-            className="flex justify-center"
+            style={{ y: isDesktop ? phoneY : 0 }}
+            className="flex justify-center w-full"
           >
-            <div className="relative w-[300px] sm:w-[340px]">
+            <div className="relative w-full max-w-[310px] sm:max-w-[340px] mx-auto">
               <motion.div 
-                className="bg-[#0c0d0e] rounded-[42px] border-[6px] border-[#1b1d1e] overflow-hidden relative"
+                className="bg-[#0c0d0e] rounded-[36px] sm:rounded-[42px] border-[5px] sm:border-[6px] border-[#1b1d1e] overflow-hidden relative shadow-2xl"
                 animate={{ 
                   boxShadow: [
                     "0 10px 40px rgba(0,0,0,0.8), 0 0 36px rgba(124,255,0,0.05)", 
@@ -124,24 +132,24 @@ export default function ChatDemoSection() {
                   )}
                 </AnimatePresence>
 
-                <div className="px-6 pt-4 pb-2 flex justify-between items-center relative z-10"><span className="text-white/50 text-xs font-medium">9:41</span><div className="w-24 h-5 bg-black rounded-full" /><div className="w-3.5 h-2.5 border border-white/40 rounded-[3px] flex items-center p-[1.5px]"><div className="w-full h-full bg-[#7CFF00] rounded-[1px]" /></div></div>
-                <div className="px-5 py-3 bg-[#101211] border-b border-white/5 relative z-10">
+                <div className="px-5 sm:px-6 pt-3.5 sm:pt-4 pb-2 flex justify-between items-center relative z-10"><span className="text-white/50 text-[11px] sm:text-xs font-medium">9:41</span><div className="w-20 sm:w-24 h-4 sm:h-5 bg-black rounded-full" /><div className="w-3.5 h-2.5 border border-white/40 rounded-[3px] flex items-center p-[1.5px]"><div className="w-full h-full bg-[#7CFF00] rounded-[1px]" /></div></div>
+                <div className="px-4 sm:px-5 py-2.5 sm:py-3 bg-[#101211] border-b border-white/5 relative z-10">
                   <div className="flex items-center justify-between">
-                    <div><div className="text-white font-bold text-sm">🍕 La Tua Pizzeria</div><div className="text-[#7CFF00] text-[11px]">● Tavolo 7 · Ordine diretto</div></div>
-                    <div className="relative"><ShoppingCart size={18} className="text-white/50" /><AnimatePresence>{cart.length > 0 && (<motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-[#7CFF00] rounded-full text-black text-[9px] font-black flex items-center justify-center">{cart.length}</motion.span>)}</AnimatePresence></div>
+                    <div><div className="text-white font-bold text-xs sm:text-sm">🍕 La Tua Pizzeria</div><div className="text-[#7CFF00] text-[10px] sm:text-[11px]">● Tavolo 7 · Ordine diretto</div></div>
+                    <div className="relative"><ShoppingCart size={17} className="text-white/50" /><AnimatePresence>{cart.length > 0 && (<motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-[#7CFF00] rounded-full text-black text-[9px] font-black flex items-center justify-center">{cart.length}</motion.span>)}</AnimatePresence></div>
                   </div>
                 </div>
-                <div className="px-4 py-4 space-y-2 min-h-[360px] relative z-10">
-                  <div className="text-white/35 text-[10px] uppercase tracking-[0.2em] mb-3 px-1">Tocca per aggiungere</div>
+                <div className="px-3 sm:px-4 py-3 sm:py-4 space-y-2 min-h-[340px] sm:min-h-[360px] relative z-10">
+                  <div className="text-white/35 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] mb-2 sm:mb-3 px-1">Tocca per aggiungere</div>
                   {menuItems.map((item) => (
-                    <motion.button key={item.id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }} onClick={() => handleAddItem(item)} className="w-full flex items-center gap-3 p-3 rounded-2xl bg-white/3 border border-white/5 hover:border-[#7CFF00]/30 hover:bg-[#7CFF00]/5 transition-all duration-200 group text-left">
-                      <span className="text-2xl">{item.emoji}</span>
-                      <div className="flex-1"><div className="text-white text-xs font-semibold">{item.name}</div><div className="text-white/35 text-[10px]">{item.category}</div></div>
-                      <div className="flex items-center gap-2"><span className="text-[#7CFF00] text-xs font-bold">€{item.price.toFixed(2)}</span><div className="w-6 h-6 rounded-full bg-[#7CFF00]/15 group-hover:bg-[#7CFF00] flex items-center justify-center transition-colors"><Plus size={11} className="text-[#7CFF00] group-hover:text-black transition-colors" /></div></div>
+                    <motion.button key={item.id} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }} onClick={() => handleAddItem(item)} className="w-full flex items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/3 border border-white/5 hover:border-[#7CFF00]/30 hover:bg-[#7CFF00]/5 transition-all duration-200 group text-left">
+                      <span className="text-xl sm:text-2xl">{item.emoji}</span>
+                      <div className="flex-1 min-w-0"><div className="text-white text-xs font-semibold truncate">{item.name}</div><div className="text-white/35 text-[9px] sm:text-[10px]">{item.category}</div></div>
+                      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0"><span className="text-[#7CFF00] text-xs font-bold">€{item.price.toFixed(2)}</span><div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#7CFF00]/15 group-hover:bg-[#7CFF00] flex items-center justify-center transition-colors"><Plus size={10} className="text-[#7CFF00] group-hover:text-black transition-colors" /></div></div>
                     </motion.button>
                   ))}
                 </div>
-                <AnimatePresence>{cart.length > 0 && (<motion.div initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 60, opacity: 0 }} className="m-3 p-3.5 rounded-2xl bg-[#7CFF00] flex items-center justify-between relative z-10"><span className="text-black text-xs font-bold">{cart.length} articoli nel carrello</span><span className="text-black text-xs font-black">€{cartTotal.toFixed(2)}</span></motion.div>)}</AnimatePresence>
+                <AnimatePresence>{cart.length > 0 && (<motion.div initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 60, opacity: 0 }} className="m-2.5 sm:m-3 p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-[#7CFF00] flex items-center justify-between relative z-10"><span className="text-black text-xs font-bold">{cart.length} articoli nel carrello</span><span className="text-black text-xs font-black">€{cartTotal.toFixed(2)}</span></motion.div>)}</AnimatePresence>
               </motion.div>
               <AnimatePresence>{upsellVisible && (
                 <motion.div 
@@ -149,27 +157,27 @@ export default function ChatDemoSection() {
                   animate={{ scale: 1, opacity: 1, y: 0 }} 
                   exit={{ scale: 0.85, opacity: 0, y: 16 }} 
                   transition={{ type: "spring", stiffness: 400, damping: 25 }} 
-                  className="absolute inset-x-2 bottom-2 rounded-3xl bg-[#101211] border border-[#7CFF00]/30 p-5 z-30" 
+                  className="absolute inset-x-2 bottom-2 rounded-2xl sm:rounded-3xl bg-[#101211] border border-[#7CFF00]/30 p-4 sm:p-5 z-30" 
                   style={{ boxShadow: "0 0 50px rgba(124,255,0,0.25), 0 20px 60px rgba(0,0,0,0.8)" }}
                 >
-                  <button onClick={() => confirmAdd()} className="absolute top-3 right-3 w-6 h-6 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/40 hover:text-white/70 transition-colors"><X size={12} /></button>
-                  <div className="text-[#7CFF00] font-black text-sm mb-1">✨ Quasi fatto!</div>
-                  <p className="text-white/55 text-xs mb-4 leading-relaxed">Vuoi aggiungere qualcosa alla <span className="text-white font-semibold">{pendingItem?.name}</span>?</p>
-                  <div className="space-y-2 mb-3">
+                  <button onClick={() => confirmAdd()} className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 w-6 h-6 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white/40 hover:text-white/70 transition-colors"><X size={12} /></button>
+                  <div className="text-[#7CFF00] font-black text-xs sm:text-sm mb-1">✨ Quasi fatto!</div>
+                  <p className="text-white/55 text-[11px] sm:text-xs mb-3 sm:mb-4 leading-relaxed">Vuoi aggiungere qualcosa alla <span className="text-white font-semibold">{pendingItem?.name}</span>?</p>
+                  <div className="space-y-1.5 sm:space-y-2 mb-2.5 sm:mb-3">
                     {upsells.map((u) => (
-                      <motion.button key={u.id} whileTap={{ scale: 0.97 }} onClick={() => confirmAdd(u)} className="w-full flex items-center gap-3 p-2.5 rounded-xl border border-white/8 hover:border-[#7CFF00]/40 hover:bg-[#7CFF00]/5 transition-all group">
-                        <span className="text-xl">{u.emoji}</span><span className="flex-1 text-xs text-white/80 text-left group-hover:text-white">{u.name}</span><span className="text-[#7CFF00] text-xs font-bold">+€{u.price.toFixed(2)}</span><div className="w-5 h-5 rounded-full bg-[#7CFF00]/15 group-hover:bg-[#7CFF00] flex items-center justify-center transition-colors"><Plus size={9} className="text-[#7CFF00] group-hover:text-black transition-colors" /></div>
+                      <motion.button key={u.id} whileTap={{ scale: 0.97 }} onClick={() => confirmAdd(u)} className="w-full flex items-center gap-2 sm:gap-3 p-2 sm:p-2.5 rounded-xl border border-white/8 hover:border-[#7CFF00]/40 hover:bg-[#7CFF00]/5 transition-all group">
+                        <span className="text-lg sm:text-xl">{u.emoji}</span><span className="flex-1 text-[11px] sm:text-xs text-white/80 text-left group-hover:text-white truncate">{u.name}</span><span className="text-[#7CFF00] text-[11px] sm:text-xs font-bold shrink-0">+€{u.price.toFixed(2)}</span><div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#7CFF00]/15 group-hover:bg-[#7CFF00] flex items-center justify-center transition-colors shrink-0"><Plus size={8} className="text-[#7CFF00] group-hover:text-black transition-colors" /></div>
                       </motion.button>
                     ))}
                   </div>
-                  <button onClick={() => confirmAdd()} className="w-full py-2 rounded-xl bg-white/5 text-white/40 text-xs hover:text-white/60 transition-colors">No grazie, procedi senza</button>
+                  <button onClick={() => confirmAdd()} className="w-full py-1.5 sm:py-2 rounded-xl bg-white/5 text-white/40 text-[10px] sm:text-xs hover:text-white/60 transition-colors">No grazie, procedi senza</button>
                 </motion.div>
               )}</AnimatePresence>
             </div>
           </motion.div>
 
           {/* Dashboard */}
-          <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }} className="space-y-4">
+          <motion.div initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }} className="space-y-3.5 sm:space-y-4 w-full">
             <div className="glass glow-pulse rounded-2xl p-4 flex items-center justify-between"><div><div className="text-white/40 text-[10px] uppercase tracking-[0.2em] mb-0.5">app.vetrinaflash.it/backoffice</div><div className="text-white font-bold text-sm">Il tuo Back Office</div></div><div className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-[#7CFF00] pulse-multi" /><span className="text-[#7CFF00] text-xs">Live</span></div></div>
             <motion.div 
               animate={

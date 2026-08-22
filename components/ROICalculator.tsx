@@ -79,24 +79,24 @@ export default function ROICalculator() {
           viewport={{ once: true, margin: "-8%" }} 
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} 
           animate={interactionPulse ? { boxShadow: ["0 0 0px rgba(124,255,0,0)", "0 0 40px rgba(124,255,0,0.15)", "0 0 0px rgba(124,255,0,0)"] } : { boxShadow: "0 0 0px rgba(124,255,0,0)" }}
-          className="card-lux rounded-3xl p-8 sm:p-10 transition-shadow duration-300"
+          className="card-lux rounded-3xl p-5 sm:p-10 transition-shadow duration-300"
         >
-          <div className="grid sm:grid-cols-2 gap-8 mb-10">
+          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">
             <Slider label="Ordini al giorno da delivery" value={ordersPerDay} min={5} max={60} step={1} format={(v) => `${v}`} onChange={setOrdersPerDay} onInteract={handleInteraction} />
             <Slider label="Scontrino medio" value={avgTicket} min={10} max={60} step={1} format={(v) => `€${v}`} onChange={setAvgTicket} onInteract={handleInteraction} />
           </div>
-          <div className="grid sm:grid-cols-2 gap-5 mb-8">
+          <div className="grid sm:grid-cols-2 gap-4 sm:gap-5 mb-6 sm:mb-8">
             <motion.div 
               animate={{ 
                 borderColor: cardPulse ? "rgba(239, 68, 68, 0.6)" : "rgba(239, 68, 68, 0.2)",
                 boxShadow: cardPulse ? "0 0 20px rgba(239, 68, 68, 0.15)" : "0 0 0px rgba(239, 68, 68, 0)"
               }}
               transition={{ duration: 0.4 }}
-              className="p-6 rounded-2xl bg-red-500/5 border border-red-500/20 animated-border"
+              className="p-4 sm:p-6 rounded-2xl bg-red-500/5 border border-red-500/20 animated-border"
             >
-              <div className="flex items-center gap-2 mb-3"><TrendingDown size={14} className="text-red-400" /><span className="text-red-400/70 text-[11px] uppercase tracking-[0.15em] font-semibold">Regali ogni mese</span></div>
-              <div className="font-display text-4xl sm:text-5xl font-extrabold text-red-400 mb-1 tabular-nums"><AnimatedCounter value={commission} /></div>
-              <div className="text-red-400/40 text-xs">il ~30% del fatturato da delivery</div>
+              <div className="flex items-center gap-2 mb-2 sm:mb-3"><TrendingDown size={14} className="text-red-400" /><span className="text-red-400/70 text-[10px] sm:text-[11px] uppercase tracking-[0.15em] font-semibold">Regali ogni mese</span></div>
+              <div className="font-display text-3xl sm:text-5xl font-extrabold text-red-400 mb-1 tabular-nums"><AnimatedCounter value={commission} /></div>
+              <div className="text-red-400/40 text-[11px] sm:text-xs">il ~30% del fatturato da delivery</div>
             </motion.div>
             <motion.div 
               animate={{ 
@@ -104,17 +104,17 @@ export default function ROICalculator() {
                 boxShadow: cardPulse ? "0 0 20px rgba(124, 255, 0, 0.15)" : "0 0 0px rgba(124, 255, 0, 0)"
               }}
               transition={{ duration: 0.4 }}
-              className="p-6 rounded-2xl bg-[#7CFF00]/5 border border-[#7CFF00]/20 animated-border"
+              className="p-4 sm:p-6 rounded-2xl bg-[#7CFF00]/5 border border-[#7CFF00]/20 animated-border"
             >
-              <div className="flex items-center gap-2 mb-3"><TrendingUp size={14} className="text-[#7CFF00]" /><span className="text-[#7CFF00]/70 text-[11px] uppercase tracking-[0.15em] font-semibold">Risparmieresti ogni anno</span></div>
-              <div className="font-display text-4xl sm:text-5xl font-extrabold neon-text mb-1 tabular-nums"><AnimatedCounter value={annualLoss} /></div>
-              <div className="text-[#7CFF00]/40 text-xs">con VetrinaFlash — 0% commissioni</div>
+              <div className="flex items-center gap-2 mb-2 sm:mb-3"><TrendingUp size={14} className="text-[#7CFF00]" /><span className="text-[#7CFF00]/70 text-[10px] sm:text-[11px] uppercase tracking-[0.15em] font-semibold">Risparmieresti ogni anno</span></div>
+              <div className="font-display text-3xl sm:text-5xl font-extrabold neon-text mb-1 tabular-nums"><AnimatedCounter value={annualLoss} /></div>
+              <div className="text-[#7CFF00]/40 text-[11px] sm:text-xs">con VetrinaFlash — 0% commissioni</div>
             </motion.div>
           </div>
-          <div className="p-4 rounded-2xl bg-white/3 border border-white/8 mb-8 text-center glow-pulse">
-            <p className="text-white/50 text-sm">In un anno perdi <span className="text-red-400 font-black text-base">€{annualLoss.toLocaleString("it-IT")}</span> in commissioni. Con VetrinaFlash sarebbero <span className="text-[#7CFF00] font-black text-base">€0</span> — e il sistema lo paghi una volta sola.</p>
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-white/3 border border-white/8 mb-6 sm:mb-8 text-center glow-pulse">
+            <p className="text-white/50 text-xs sm:text-sm">In un anno perdi <span className="text-red-400 font-black text-sm sm:text-base">€{annualLoss.toLocaleString("it-IT")}</span> in commissioni. Con VetrinaFlash sarebbero <span className="text-[#7CFF00] font-black text-sm sm:text-base">€0</span> — e il sistema lo paghi una volta sola.</p>
           </div>
-          <a href={WA_QUOTE} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl bg-[#7CFF00] text-black font-bold text-base hover:scale-[1.02] transition-transform shimmer" style={{ boxShadow: "0 0 32px rgba(124,255,0,0.4)" }}><MessageCircle size={18} />Recupera i tuoi soldi — chiedi un preventivo</a>
+          <a href={WA_QUOTE} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full py-3.5 sm:py-4 px-4 rounded-2xl bg-[#7CFF00] text-black font-bold text-sm sm:text-base hover:scale-[1.02] transition-transform shimmer text-center" style={{ boxShadow: "0 0 32px rgba(124,255,0,0.4)" }}><MessageCircle size={18} />Recupera i tuoi soldi — chiedi un preventivo</a>
         </motion.div>
       </div>
     </section>

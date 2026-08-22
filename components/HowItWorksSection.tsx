@@ -17,6 +17,7 @@ function StepCard({ s, i, inView }: { s: typeof steps[0], i: number, inView: boo
   const rotateY = useTransform(x, [0, 1], [-8, 8]);
 
   function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+    if (window.matchMedia("(hover: none)").matches) return;
     const rect = event.currentTarget.getBoundingClientRect();
     x.set((event.clientX - rect.left) / rect.width);
     y.set((event.clientY - rect.top) / rect.height);
@@ -35,19 +36,19 @@ function StepCard({ s, i, inView }: { s: typeof steps[0], i: number, inView: boo
       style={{ rotateX, rotateY, perspective: 1000 }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative text-center group"
+      className="relative text-center group px-2 sm:px-0"
     >
-      <div className="relative inline-flex mb-7">
-        <motion.div whileHover={{ scale: 1.08 }} className="glow-pulse relative w-[72px] h-[72px] rounded-2xl glass-green flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_40px_rgba(124,255,0,0.25)]" style={{ boxShadow: "0 0 32px rgba(124,255,0,0.12)" }}>
-          <s.icon size={28} className="text-[#7CFF00] icon-glow transition-all duration-300 group-hover:scale-110" />
-          <span className="absolute -top-2.5 -right-2.5 px-2 py-0.5 rounded-full bg-[#7CFF00] text-black text-[10px] font-black relative">
+      <div className="relative inline-flex mb-6 sm:mb-7">
+        <motion.div whileHover={{ scale: 1.08 }} className="glow-pulse relative w-[64px] h-[64px] sm:w-[72px] sm:h-[72px] rounded-2xl glass-green flex items-center justify-center transition-all duration-300 group-hover:shadow-[0_0_40px_rgba(124,255,0,0.25)]" style={{ boxShadow: "0 0 32px rgba(124,255,0,0.12)" }}>
+          <s.icon size={26} className="text-[#7CFF00] icon-glow transition-all duration-300 group-hover:scale-110" />
+          <span className="absolute -top-2 -right-2 sm:-top-2.5 sm:-right-2.5 px-2 py-0.5 rounded-full bg-[#7CFF00] text-black text-[10px] font-black relative">
             <span className="absolute inset-0 rounded-full bg-[#7CFF00] animate-ping opacity-60"></span>
             <span className="relative z-10">{s.step}</span>
           </span>
         </motion.div>
       </div>
-      <h3 className="font-display text-xl font-bold text-white mb-2">{s.title}</h3>
-      <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/8 text-[#7CFF00] text-[11px] font-semibold uppercase tracking-widest mb-4">{s.time}</div>
+      <h3 className="font-display text-lg sm:text-xl font-bold text-white mb-2">{s.title}</h3>
+      <div className="inline-block px-3 py-1 rounded-full bg-white/5 border border-white/8 text-[#7CFF00] text-[10px] sm:text-[11px] font-semibold uppercase tracking-widest mb-3 sm:mb-4">{s.time}</div>
       <p className="text-white/45 text-sm leading-relaxed max-w-xs mx-auto">{s.description}</p>
     </motion.div>
   );

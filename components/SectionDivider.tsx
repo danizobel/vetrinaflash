@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function SectionDivider({ className = "" }: { className?: string }) {
   return (
-    <div className={`relative w-full py-1 ${className}`}>
+    <div className={`relative w-full py-1 overflow-hidden ${className}`}>
       <div className="section-divider mx-auto max-w-4xl" />
       <motion.div
         animate={{

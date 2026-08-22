@@ -41,14 +41,14 @@ export default function ComparisonSection() {
           <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5">Metti i numeri in fila.<br /><span className="gradient-text">Poi decidi.</span></motion.h2>
           <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-white/50 text-lg">Nessun paragone creativo. Questi sono i dati reali delle piattaforme. Tu scegli.</motion.p>
         </div>
-        <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-8%" }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} className="card-lux rounded-3xl overflow-hidden glow-pulse">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm min-w-[620px]">
+        <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-8%" }} transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }} className="card-lux rounded-3xl overflow-hidden glow-pulse relative">
+          <div className="overflow-x-auto relative scrollbar-none">
+            <table className="w-full text-sm min-w-[580px] sm:min-w-[620px]">
               <thead>
                 <tr className="border-b border-white/8">
-                  <th className="text-left px-4 sm:px-6 py-5 text-white/35 text-xs uppercase tracking-[0.15em] font-semibold sticky left-0 z-10 bg-[#0a0c08] sm:static sm:bg-transparent max-w-[170px] sm:max-w-none">Caratteristica</th>
+                  <th className="text-left px-4 sm:px-6 py-4 sm:py-5 text-white/35 text-xs uppercase tracking-[0.15em] font-semibold sticky left-0 z-20 bg-[#0c0e0c]/95 backdrop-blur-md border-r border-white/5 sm:border-r-0 sm:static sm:bg-transparent min-w-[150px] sm:min-w-0">Caratteristica</th>
                   {["JustEat", "Glovo", "Deliveroo"].map((n, idx) => (
-                    <th key={n} className="px-4 py-5 text-white/40 font-semibold text-center">
+                    <th key={n} className="px-3 sm:px-4 py-4 sm:py-5 text-white/40 font-semibold text-center min-w-[95px] sm:min-w-0">
                       <span className="relative inline-block">
                         {n}
                         <motion.span
@@ -61,31 +61,33 @@ export default function ComparisonSection() {
                       </span>
                     </th>
                   ))}
-                  <th className="px-4 py-5 text-center relative"><div className="absolute inset-0 bg-[#7CFF00]/[0.15] border-x border-t border-[#7CFF00]/30 glow-pulse" /><span className="relative font-display font-bold text-[#7CFF00]">VetrinaFlash</span></th>
+                  <th className="px-4 py-4 sm:py-5 text-center relative min-w-[120px] sm:min-w-0"><div className="absolute inset-0 bg-[#7CFF00]/[0.15] border-x border-t border-[#7CFF00]/30 glow-pulse" /><span className="relative font-display font-bold text-[#7CFF00]">VetrinaFlash</span></th>
                 </tr>
               </thead>
               <tbody>
                 {rows.map((row, i) => (
                   <motion.tr 
                     key={row.label} 
-                    initial={{ opacity: 0, x: -14, backgroundPosition: "200% 0" }} 
-                    whileInView={{ opacity: 1, x: 0, backgroundPosition: "-100% 0" }} 
+                    initial={{ opacity: 0, x: -10 }} 
+                    whileInView={{ opacity: 1, x: 0 }} 
                     viewport={{ once: true, margin: "-5%" }} 
-                    transition={{ delay: i * 0.05, duration: 0.7 }} 
-                    className="border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors bg-[length:200%_100%] bg-gradient-to-r from-transparent via-[#7CFF00]/5 to-transparent"
+                    transition={{ delay: i * 0.04, duration: 0.5 }} 
+                    className="border-b border-white/5 last:border-0 hover:bg-white/[0.02] transition-colors"
                   >
-                    <td className="px-4 sm:px-6 py-4 text-white/70 font-medium sticky left-0 z-10 bg-[#0a0c08] sm:static sm:bg-transparent max-w-[170px] sm:max-w-none">{row.label}</td>
-                    <td className="px-4 py-4 text-center"><CellValue value={row.justeat} delay={i * 0.05 + 0.2} /></td>
-                    <td className="px-4 py-4 text-center"><CellValue value={row.glovo} delay={i * 0.05 + 0.3} /></td>
-                    <td className="px-4 py-4 text-center"><CellValue value={row.deliveroo} delay={i * 0.05 + 0.4} /></td>
-                    <td className="px-4 py-4 text-center relative"><div className={`absolute inset-0 bg-[#7CFF00]/[0.15] border-x border-[#7CFF00]/30 glow-pulse ${i === rows.length - 1 ? "border-b rounded-b" : ""}`} /><span className="relative"><CellValue value={row.vf} highlight delay={i * 0.05 + 0.5} /></span></td>
+                    <td className="px-4 sm:px-6 py-3.5 sm:py-4 text-white/70 font-medium sticky left-0 z-20 bg-[#0c0e0c]/95 backdrop-blur-md border-r border-white/5 sm:border-r-0 sm:static sm:bg-transparent text-xs sm:text-sm">{row.label}</td>
+                    <td className="px-3 sm:px-4 py-3.5 sm:py-4 text-center"><CellValue value={row.justeat} delay={i * 0.04 + 0.1} /></td>
+                    <td className="px-3 sm:px-4 py-3.5 sm:py-4 text-center"><CellValue value={row.glovo} delay={i * 0.04 + 0.2} /></td>
+                    <td className="px-3 sm:px-4 py-3.5 sm:py-4 text-center"><CellValue value={row.deliveroo} delay={i * 0.04 + 0.3} /></td>
+                    <td className="px-4 py-3.5 sm:py-4 text-center relative"><div className={`absolute inset-0 bg-[#7CFF00]/[0.15] border-x border-[#7CFF00]/30 glow-pulse ${i === rows.length - 1 ? "border-b rounded-b" : ""}`} /><span className="relative"><CellValue value={row.vf} highlight delay={i * 0.04 + 0.4} /></span></td>
                   </motion.tr>
                 ))}
               </tbody>
             </table>
           </div>
         </motion.div>
-        <p className="sm:hidden text-center text-white/30 text-xs mt-4">Scorri la tabella verso sinistra per vedere VetrinaFlash →</p>
+        <p className="sm:hidden text-center text-white/40 text-xs mt-3.5 flex items-center justify-center gap-1.5">
+          <span>👈</span> Scorri la tabella per vedere VetrinaFlash <span>👉</span>
+        </p>
       </div>
     </section>
   );

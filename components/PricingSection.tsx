@@ -19,7 +19,7 @@ export default function PricingSection() {
     <section id="pricing" className="aurora relative py-24 md:py-32 overflow-hidden">
       <motion.div animate={{ scale: [1, 1.12, 1], opacity: [0.35, 0.55, 0.35] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] h-[640px] rounded-full bg-[#7CFF00]/[0.05] blur-[120px] pointer-events-none" />
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6">
-        <motion.div initial={{ opacity: 0, y: 44, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-10%" }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }} className="glow-pulse relative card-lux rounded-[2rem] p-8 sm:p-12 overflow-hidden" style={{ boxShadow: "0 0 60px rgba(124,255,0,0.08)" }}>
+        <motion.div initial={{ opacity: 0, y: 44, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: "-10%" }} transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }} className="glow-pulse relative card-lux rounded-[2rem] p-6 sm:p-12 overflow-hidden" style={{ boxShadow: "0 0 60px rgba(124,255,0,0.08)" }}>
           {/* Animated top gradient line */}
           <div className="absolute top-0 left-0 right-0 h-px bg-white/5 overflow-hidden">
             <motion.div 
@@ -29,14 +29,14 @@ export default function PricingSection() {
             />
           </div>
           
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-green text-[#7CFF00] text-[11px] font-semibold uppercase tracking-[0.2em] mb-7">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-green text-[#7CFF00] text-[11px] font-semibold uppercase tracking-[0.2em] mb-6 sm:mb-7">
             <motion.div animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }} transition={{ repeat: Infinity, duration: 2 }}>
               <Star size={12} className="fill-current" />
             </motion.div>
             Investimento intelligente
           </div>
           
-          <h2 className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-5">
+          <h2 className="font-display text-[clamp(1.75rem,8.4vw,2.125rem)] sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4 sm:mb-5">
             <span className="neon-text relative inline-block">
               Una tantum.
               <motion.span 
@@ -49,11 +49,11 @@ export default function PricingSection() {
             <span className="gradient-text">Adattato a te.</span>
           </h2>
           
-          <p className="text-white/50 text-lg leading-relaxed mb-9 max-w-xl">Nessun canone mensile che pesa sul bilancio ogni 30 giorni. Paghi una volta, il sistema è <span className="text-white font-semibold">tuo</span>. Adattiamo ogni soluzione alle esigenze specifiche del tuo locale.</p>
+          <p className="text-white/50 text-base sm:text-lg leading-relaxed mb-7 sm:mb-9 max-w-xl">Nessun canone mensile che pesa sul bilancio ogni 30 giorni. Paghi una volta, il sistema è <span className="text-white font-semibold">tuo</span>. Adattiamo ogni soluzione alle esigenze specifiche del tuo locale.</p>
           
-          <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-3.5 mb-10">
+          <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-3 sm:gap-y-3.5 mb-8 sm:mb-10">
             {included.map((item, i) => (
-              <motion.li key={item} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.25 + i * 0.06 }} className="flex items-start gap-3">
+              <motion.li key={item} initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.25 + i * 0.06 }} className="flex items-start gap-2.5 sm:gap-3">
                 <motion.span 
                   initial={{ scale: 0 }} 
                   whileInView={{ scale: 1 }} 
@@ -63,7 +63,7 @@ export default function PricingSection() {
                 >
                   <Check size={11} className="text-[#7CFF00]" strokeWidth={3} />
                 </motion.span>
-                <span className="text-white/65 text-sm">{item}</span>
+                <span className="text-white/65 text-xs sm:text-sm">{item}</span>
               </motion.li>
             ))}
           </ul>
@@ -74,14 +74,14 @@ export default function PricingSection() {
             rel="noopener noreferrer" 
             whileHover={{ scale: 1.02 }} 
             whileTap={{ scale: 0.98 }} 
-            className="shimmer flex items-center justify-center gap-2.5 w-full px-6 py-4 rounded-2xl bg-[#7CFF00] text-black font-bold text-base sm:text-lg overflow-hidden relative" 
+            className="shimmer flex items-center justify-center gap-2 sm:gap-2.5 w-full px-4 sm:px-6 py-3.5 sm:py-4 rounded-2xl bg-[#7CFF00] text-black font-bold text-sm sm:text-lg overflow-hidden relative text-center" 
             style={{ boxShadow: "0 0 36px rgba(124,255,0,0.4)" }}
           >
-            <MessageCircle size={19} className="relative z-10" />
+            <MessageCircle size={18} className="relative z-10 shrink-0" />
             <span className="relative z-10">Richiedi il tuo preventivo su WhatsApp</span>
           </motion.a>
           
-          <p className="text-white/25 text-xs text-center mt-4">Risposta entro poche ore · Preventivo gratuito e senza impegno · {PHONE_DISPLAY}</p>
+          <p className="text-white/25 text-[11px] sm:text-xs text-center mt-4">Risposta entro poche ore · Preventivo gratuito e senza impegno · {PHONE_DISPLAY}</p>
         </motion.div>
       </div>
     </section>
